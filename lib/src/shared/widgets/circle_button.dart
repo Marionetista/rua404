@@ -1,20 +1,23 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import '../colors/app_colors.dart';
 
-enum CircleButtonIcon { bag, calendar, profile, exit, aircon }
+enum CircleButtonIcon { bag, addBag, calendar, profile, exit, aircon }
 
 class CircleButton extends StatelessWidget {
   const CircleButton({
     required this.icon,
     this.splashColor,
-    this.fillColor,
+    this.itemsCount = 0,
     this.onTap,
     super.key,
   });
 
   final CircleButtonIcon icon;
   final Color? splashColor;
-  final Color? fillColor;
+  final int? itemsCount;
   final Function()? onTap;
 
   @override
@@ -22,39 +25,83 @@ class CircleButton extends StatelessWidget {
     String assetName;
     switch (icon) {
       case CircleButtonIcon.bag:
-        assetName = 'assets/images/bag.png';
+        assetName = 'assets/icons/bag.png';
         break;
       case CircleButtonIcon.calendar:
-        assetName = 'assets/images/calendar.png';
+        assetName = 'assets/icons/calendar.png';
         break;
       case CircleButtonIcon.profile:
-        assetName = 'assets/images/profile.png';
+        assetName = 'assets/icons/profile.png';
         break;
       case CircleButtonIcon.exit:
-        assetName = 'assets/images/exit.png';
+        assetName = 'assets/icons/exit.png';
         break;
       case CircleButtonIcon.aircon:
-        assetName = 'assets/images/aricon.png';
+        assetName = 'assets/icons/ariconblack.png';
+      case CircleButtonIcon.addBag:
+        assetName = 'assets/icons/addBag.png';
         break;
     }
 
-    return InkWell(
-      onTap: onTap ?? () {},
-      borderRadius: BorderRadius.circular(48),
-      splashColor: splashColor ?? Colors.purpleAccent,
-      child: Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: fillColor?.withValues(alpha: .9) ?? AppColors.halfWhite,
-          shape: BoxShape.circle,
-        ),
-        child: Center(
-          child: Image.asset(
-            assetName,
-            width: 24,
-            height: 24,
-            fit: BoxFit.contain,
+    return Tooltip(
+      message: '',
+      child: Badge(
+        backgroundColor: Colors.white,
+        textColor: Colors.black,
+        label: Text(itemsCount.toString()),
+        isLabelVisible: icon == CircleButtonIcon.bag,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.mediumImpact();
+            onTap?.call();
+          },
+          borderRadius: BorderRadius.circular(48),
+          splashColor: splashColor ?? Colors.purpleAccent,
+          highlightColor: Colors.transparent,
+          child: ClipOval(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child:
+                  icon == CircleButtonIcon.aircon
+                      ? Container(
+                        width: 48,
+                        height: 48,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/icons/foil.png'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/icons/ariconblack.png',
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      )
+                      : Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.halfWhite,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.transparent,
+                            width: 0,
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            assetName,
+                            width: 24,
+                            height: 24,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+            ),
           ),
         ),
       ),
