@@ -24,35 +24,38 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       child: Row(
         children: [
           Expanded(
-            child: BlurTextButton(
-              text: 'Busque por aqui',
-              onTap:
-                  () => Navigator.of(context).push(
-                    PageRouteBuilder(
-                      transitionDuration: const Duration(milliseconds: 300),
-                      pageBuilder:
-                          (context, animation, secondaryAnimation) =>
-                              const SearchPage(),
-                      transitionsBuilder: (
-                        context,
-                        animation,
-                        secondaryAnimation,
-                        child,
-                      ) {
-                        const begin = Offset(0.0, 1.0);
-                        const end = Offset.zero;
-                        final tween = Tween(
-                          begin: begin,
-                          end: end,
-                        ).chain(CurveTween(curve: Curves.easeOut));
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: BlurTextButton(
+                text: 'Busque por aqui',
+                onTap:
+                    () => Navigator.of(context).push(
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 300),
+                        pageBuilder:
+                            (context, animation, secondaryAnimation) =>
+                                const SearchPage(),
+                        transitionsBuilder: (
+                          context,
+                          animation,
+                          secondaryAnimation,
+                          child,
+                        ) {
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          final tween = Tween(
+                            begin: begin,
+                            end: end,
+                          ).chain(CurveTween(curve: Curves.easeOut));
 
-                        return SlideTransition(
-                          position: animation.drive(tween),
-                          child: child,
-                        );
-                      },
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ),
                     ),
-                  ),
+              ),
             ),
           ),
           const Row(

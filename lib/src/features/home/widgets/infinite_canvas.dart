@@ -30,13 +30,79 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
 
   bool showPopup = false;
   String? selectedImage;
+  PersistentBottomSheetController? _sheetController;
 
-  void openImage(String imagePath) => setState(() {
-    showPopup = true;
-    selectedImage = imagePath;
-  });
+  void openImage(String imagePath) {
+    setState(() {
+      showPopup = true;
+      selectedImage = imagePath;
+    });
 
-  void closePopup() => setState(() => showPopup = false);
+    _sheetController = Scaffold.of(context).showBottomSheet(
+      backgroundColor: Colors.transparent,
+      (BuildContext context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (selectedImage != null)
+            Center(
+              child: FlyingCover(imgUrl: selectedImage, onTap: closePopup),
+            ),
+          const SizedBox(height: 50),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Páginas Mock Mangá',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        Text(
+                          'Print',
+                          style: TextStyle(color: Colors.white, fontSize: 14),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        CircleButton(icon: CircleButtonIcon.aircon),
+                        SizedBox(width: 10),
+                        CircleButton(icon: CircleButtonIcon.addBag),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                Text('Sobre a peça'),
+                SizedBox(height: 8),
+                Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit...',
+                  maxLines: 3,
+                ),
+                SizedBox(height: 10),
+                SizedBox(width: 130, child: BlurTextButton(text: 'Ler mais')),
+                SizedBox(height: 10),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
+    _sheetController!.closed.then((_) {
+      if (mounted) {
+        setState(() => showPopup = false);
+      }
+    });
+  }
+
+  void closePopup() => _sheetController?.close();
 
   @override
   Widget build(BuildContext context) => Stack(
@@ -70,68 +136,13 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               }).toList(),
         ),
       ),
-
-      // Popup com imagem centralizada e fundo com opacidade
       if (showPopup)
         AnimatedOpacity(
-          opacity: showPopup ? 1 : 0,
+          opacity: 1,
           duration: const Duration(milliseconds: 300),
           child: GestureDetector(
             onTap: closePopup,
-            child: Container(color: const Color.fromARGB(233, 0, 0, 0)),
-          ),
-        ),
-
-      if (showPopup)
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          top: 200,
-          left: 0,
-          right: 0,
-          child: Column(
-            children: [
-              if (selectedImage != null)
-                Center(
-                  child: FlyingCover(imgUrl: selectedImage!, onTap: closePopup),
-                ),
-              const SizedBox(height: 20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [Text('Paginas Mock Mangá'), Text('Print')],
-                        ),
-                        Row(
-                          spacing: 10,
-                          children: [
-                            CircleButton(icon: CircleButtonIcon.aircon),
-                            CircleButton(icon: CircleButtonIcon.bag),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 8),
-                    Text('Sobre a peça'),
-                    SizedBox(height: 8),
-                    Text(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                      maxLines: 3,
-                    ),
-                    SizedBox(height: 8),
-                    SizedBox(
-                      width: 130,
-                      child: BlurTextButton(text: 'Ler mais'),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            child: Container(color: const Color.fromARGB(243, 0, 0, 0)),
           ),
         ),
     ],

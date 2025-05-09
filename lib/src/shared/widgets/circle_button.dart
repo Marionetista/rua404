@@ -23,28 +23,35 @@ class CircleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String assetName;
+    String tooltip;
     switch (icon) {
       case CircleButtonIcon.bag:
         assetName = 'assets/icons/bag.png';
+        tooltip = 'Sacola';
         break;
       case CircleButtonIcon.calendar:
         assetName = 'assets/icons/calendar.png';
+        tooltip = 'Calendário de eventos';
         break;
       case CircleButtonIcon.profile:
         assetName = 'assets/icons/profile.png';
+        tooltip = 'Perfil e configurações';
         break;
       case CircleButtonIcon.exit:
         assetName = 'assets/icons/exit.png';
+        tooltip = 'Fechar';
         break;
       case CircleButtonIcon.aircon:
         assetName = 'assets/icons/ariconblack.png';
+        tooltip = 'Filtros AR!';
       case CircleButtonIcon.addBag:
-        assetName = 'assets/icons/addBag.png';
+        assetName = 'assets/icons/addbag.png';
+        tooltip = 'Adicionar na sacola';
         break;
     }
 
     return Tooltip(
-      message: '',
+      message: tooltip,
       child: Badge(
         backgroundColor: Colors.white,
         textColor: Colors.black,

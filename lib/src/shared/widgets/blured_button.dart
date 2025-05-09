@@ -11,33 +11,30 @@ class BlurTextButton extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 10),
-    child: ClipRRect(
-      borderRadius: BorderRadius.circular(48),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: InkWell(
-          onTap: () {
-            HapticFeedback.mediumImpact();
-            onTap?.call();
-          },
-          borderRadius: BorderRadius.circular(48),
-          highlightColor: Colors.transparent,
-          child: Container(
-            height: 48,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: AppColors.halfWhite,
-              borderRadius: BorderRadius.circular(48),
-            ),
-            alignment: Alignment.center,
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white.withValues(alpha: 0.5),
-                fontSize: 16,
-              ),
+  Widget build(BuildContext context) => ClipRRect(
+    borderRadius: BorderRadius.circular(48),
+    child: BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      child: InkWell(
+        onTap: () {
+          HapticFeedback.mediumImpact();
+          onTap?.call();
+        },
+        borderRadius: BorderRadius.circular(48),
+        highlightColor: Colors.transparent,
+        child: Container(
+          height: 48,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            color: AppColors.halfWhite,
+            borderRadius: BorderRadius.circular(48),
+          ),
+          alignment: Alignment.center,
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.5),
+              fontSize: 16,
             ),
           ),
         ),

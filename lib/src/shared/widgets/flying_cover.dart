@@ -60,7 +60,23 @@ class _FlyingCoverState extends State<FlyingCover>
               _flyAway();
             }
           },
-          child: Center(child: Image.asset(widget.imgUrl!, width: 200)),
+          child: Center(
+            child: Container(
+              decoration: const BoxDecoration(
+                shape: BoxShape.rectangle,
+                boxShadow: [
+                  BoxShadow(
+                    color:
+                        Colors
+                            .transparent, //Colors.white.withValues(alpha: 0.5),
+                    blurRadius: 30,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Image.asset(widget.imgUrl!, width: 200),
+            ),
+          ),
         ),
 
       if (_hasFlownAway)
