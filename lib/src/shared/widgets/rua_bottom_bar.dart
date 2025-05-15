@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../features/search/pages/search_page.dart';
+import '../../features/settings/pages/settings_page.dart';
 import '../colors/app_colors.dart';
 import 'blured_button.dart';
 import 'circle_button.dart';
@@ -31,10 +31,11 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 onTap:
                     () => Navigator.of(context).push(
                       PageRouteBuilder(
+                        opaque: false,
                         transitionDuration: const Duration(milliseconds: 300),
                         pageBuilder:
                             (context, animation, secondaryAnimation) =>
-                                const SearchPage(),
+                                const SettingsPage(),
                         transitionsBuilder: (
                           context,
                           animation,
@@ -58,11 +59,41 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               ),
             ),
           ),
-          const Row(
+          Row(
             spacing: 10,
             children: [
-              CircleButton(icon: CircleButtonIcon.aircon),
-              CircleButton(icon: CircleButtonIcon.profile),
+              const CircleButton(icon: CircleButtonIcon.aircon),
+              CircleButton(
+                icon: CircleButtonIcon.profile,
+                onTap:
+                    () => Navigator.of(context).push(
+                      PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration: const Duration(milliseconds: 300),
+                        pageBuilder:
+                            (context, animation, secondaryAnimation) =>
+                                const SettingsPage(),
+                        transitionsBuilder: (
+                          context,
+                          animation,
+                          secondaryAnimation,
+                          child,
+                        ) {
+                          const begin = Offset(0.0, 1.0);
+                          const end = Offset.zero;
+                          final tween = Tween(
+                            begin: begin,
+                            end: end,
+                          ).chain(CurveTween(curve: Curves.easeOut));
+
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ),
+                    ),
+              ),
             ],
           ),
         ],
