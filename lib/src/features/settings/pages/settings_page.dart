@@ -5,6 +5,7 @@ import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../utils/app_utils.dart';
+import '../widgets/tile_button_widget.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -32,9 +33,12 @@ class SettingsPage extends StatelessWidget {
           child: Container(color: Colors.black.withValues(alpha: 0.4)),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: kToolbarHeight * 2),
-          child: Align(
-            alignment: Alignment.topLeft,
+          padding: EdgeInsets.only(
+            top:
+                AppBar().preferredSize.height +
+                MediaQuery.of(context).padding.top,
+          ),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
@@ -132,26 +136,5 @@ class SettingsPage extends StatelessWidget {
         ],
       ),
     ),
-  );
-}
-
-class TileButton extends StatelessWidget {
-  const TileButton({required this.iconUrl, required this.title, super.key});
-
-  final String iconUrl;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-    leading: Image.asset(iconUrl, width: 24, height: 24, fit: BoxFit.contain),
-    title: Text(
-      title,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.w500,
-      ),
-    ),
-    trailing: const Icon(Icons.arrow_forward_ios_sharp, color: Colors.white),
   );
 }

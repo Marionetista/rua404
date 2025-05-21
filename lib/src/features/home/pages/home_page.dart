@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../shared/widgets/circle_button.dart';
 import '../../../shared/widgets/rua_bottom_bar.dart';
+import '../../bag/pages/bag_page.dart';
+import '../../calendar/pages/calendar_page.dart';
 import '../widgets/infinite_canvas.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,11 +22,41 @@ class _HomePageState extends State<HomePage> {
     appBar: AppBar(
       backgroundColor: Colors.transparent,
       leading: const Text('RuA404', style: TextStyle(color: Colors.white)),
-      actions: const [
-        CircleButton(icon: CircleButtonIcon.calendar),
-        SizedBox(width: 10),
-        CircleButton(icon: CircleButtonIcon.bag),
-        SizedBox(width: 20),
+      actions: [
+        CircleButton(
+          icon: CircleButtonIcon.calendar,
+          onTap:
+              () => Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  transitionDuration: const Duration(milliseconds: 200),
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const CalendarPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(opacity: animation, child: child),
+                ),
+              ),
+        ),
+        const SizedBox(width: 10),
+        CircleButton(
+          icon: CircleButtonIcon.bag,
+          onTap:
+              () => Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  transitionDuration: const Duration(milliseconds: 200),
+                  pageBuilder:
+                      (context, animation, secondaryAnimation) =>
+                          const BagPage(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          FadeTransition(opacity: animation, child: child),
+                ),
+              ),
+        ),
+        const SizedBox(width: 20),
       ],
     ),
     body: const InfiniteCanvas(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../features/calendar/pages/calendar_page.dart';
 import '../../features/settings/pages/settings_page.dart';
 import '../colors/app_colors.dart';
 import 'blured_button.dart';
@@ -35,7 +36,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                         transitionDuration: const Duration(milliseconds: 300),
                         pageBuilder:
                             (context, animation, secondaryAnimation) =>
-                                const SettingsPage(),
+                                const CalendarPage(),
                         transitionsBuilder: (
                           context,
                           animation,
@@ -69,28 +70,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                     () => Navigator.of(context).push(
                       PageRouteBuilder(
                         opaque: false,
-                        transitionDuration: const Duration(milliseconds: 300),
+                        transitionDuration: const Duration(milliseconds: 200),
                         pageBuilder:
                             (context, animation, secondaryAnimation) =>
                                 const SettingsPage(),
-                        transitionsBuilder: (
-                          context,
-                          animation,
-                          secondaryAnimation,
-                          child,
-                        ) {
-                          const begin = Offset(0.0, 1.0);
-                          const end = Offset.zero;
-                          final tween = Tween(
-                            begin: begin,
-                            end: end,
-                          ).chain(CurveTween(curve: Curves.easeOut));
-
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) =>
+                                FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
                       ),
                     ),
               ),
