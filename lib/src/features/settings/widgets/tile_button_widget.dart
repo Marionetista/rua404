@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/colors/app_colors.dart';
+
 class TileButton extends StatelessWidget {
   const TileButton({required this.iconUrl, required this.title, super.key});
 
@@ -18,6 +20,6 @@ class TileButton extends StatelessWidget {
         fontWeight: FontWeight.w500,
       ),
     ),
-    trailing: const Icon(Icons.arrow_forward_ios_sharp, color: Colors.white),
+    trailing: Icon(Icons.arrow_forward_ios_sharp, color: AppColors.ruaWhite),
   );
 }

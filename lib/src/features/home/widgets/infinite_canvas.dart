@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../shared/widgets/flying_cover.dart';
@@ -48,8 +49,8 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
               child: FlyingCover(imgUrl: selectedImage, onTap: closePopup),
             ),
           const SizedBox(height: 50),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -61,15 +62,21 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                       children: [
                         Text(
                           'Páginas Mock Mangá',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                            color: AppColors.ruaWhite,
+                            fontSize: 16,
+                          ),
                         ),
                         Text(
                           'Print',
-                          style: TextStyle(color: Colors.white, fontSize: 14),
+                          style: TextStyle(
+                            color: AppColors.ruaWhite,
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     ),
-                    Row(
+                    const Row(
                       children: [
                         CircleButton(icon: CircleButtonIcon.aircon),
                         SizedBox(width: 10),
@@ -78,16 +85,19 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
                     ),
                   ],
                 ),
-                SizedBox(height: 8),
-                Text('Sobre a peça'),
-                SizedBox(height: 8),
-                Text(
+                const SizedBox(height: 8),
+                const Text('Sobre a peça'),
+                const SizedBox(height: 8),
+                const Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit...',
                   maxLines: 3,
                 ),
-                SizedBox(height: 10),
-                SizedBox(width: 130, child: BlurTextButton(text: 'Ler mais')),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
+                const SizedBox(
+                  width: 130,
+                  child: BlurTextButton(text: 'Ler mais'),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),

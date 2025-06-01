@@ -94,7 +94,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar>
                     Expanded(
                       child: TextField(
                         controller: _controller,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: AppColors.ruaWhite),
                         decoration: const InputDecoration.collapsed(
                           hintText: 'Digite para buscar',
                           hintStyle: TextStyle(color: Colors.white54),
@@ -102,7 +102,7 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar>
                       ),
                     ),
                     IconButton(
-                      icon: const Icon(Icons.close, color: Colors.white),
+                      icon: Icon(Icons.close, color: AppColors.ruaWhite),
                       onPressed:
                           () => setState(() {
                             isSearching = false;
@@ -111,13 +111,12 @@ class _AnimatedSearchBarState extends State<AnimatedSearchBar>
                     ),
                   ],
                 )
-                : const Padding(
-                  key: ValueKey('button'),
-                  padding: EdgeInsets.symmetric(horizontal: 20),
+                : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
                     child: Text(
                       'Busque por aqui',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(color: AppColors.ruaWhite, fontSize: 16),
                     ),
                   ),
                 ),

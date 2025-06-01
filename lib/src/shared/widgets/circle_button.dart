@@ -53,7 +53,7 @@ class CircleButton extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Badge(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.ruaWhite,
         textColor: Colors.black,
         label: Text(itemsCount.toString()),
         isLabelVisible: icon == CircleButtonIcon.bag,

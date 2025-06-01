@@ -14,10 +14,10 @@ class BagEmptyWidget extends StatelessWidget {
       children: [
         SvgPicture.asset('assets/images/sacolaVazia.svg'),
         const SizedBox(height: 14),
-        const Text(
+        Text(
           'Vish, sua sacola está vazia...',
           style: TextStyle(
-            color: Colors.white,
+            color: AppColors.ruaWhite,
             fontSize: 20,
             fontWeight: FontWeight.w600,
           ),
@@ -41,12 +41,12 @@ class BagEmptyWidget extends StatelessWidget {
                 HapticFeedback.mediumImpact();
               },
               borderRadius: BorderRadius.circular(48),
-              highlightColor: Colors.white,
+              highlightColor: AppColors.ruaWhite,
               child: Container(
                 height: 48,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.ruaWhite,
                   borderRadius: BorderRadius.circular(48),
                 ),
                 alignment: Alignment.center,

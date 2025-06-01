@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../utils/app_utils.dart';
@@ -25,7 +26,7 @@ class _CalendarPageState extends State<CalendarPage> {
     extendBody: true,
     appBar: AppBar(
       backgroundColor: Colors.transparent,
-      leading: const Text('RuA404', style: TextStyle(color: Colors.white)),
+      leading: Text('RuA404', style: TextStyle(color: AppColors.ruaWhite)),
       actions: [
         CircleButton(
           icon: CircleButtonIcon.exit,
@@ -49,16 +50,16 @@ class _CalendarPageState extends State<CalendarPage> {
           ),
           child: CustomScrollView(
             slivers: [
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 16.0,
                     vertical: 10.0,
                   ),
                   child: Text(
                     'Eventos futuros',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.ruaWhite,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),
@@ -110,16 +111,16 @@ class _CalendarPageState extends State<CalendarPage> {
                     ),
                   ),
                 ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 16.0,
                     vertical: 10.0,
                   ),
                   child: Text(
                     'Eventos anteriores',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.ruaWhite,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                     ),

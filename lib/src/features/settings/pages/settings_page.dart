@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
     extendBody: true,
     appBar: AppBar(
       backgroundColor: Colors.transparent,
-      leading: const Text('RuA404', style: TextStyle(color: Colors.white)),
+      leading: Text('RuA404', style: TextStyle(color: AppColors.ruaWhite)),
       actions: [
         CircleButton(
           icon: CircleButtonIcon.exit,
@@ -43,13 +43,13 @@ class SettingsPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               spacing: 12,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Text(
                     'Configurações',
                     textAlign: TextAlign.start,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.ruaWhite,
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
@@ -122,8 +122,8 @@ class SettingsPage extends StatelessWidget {
                   }
                   return Text(
                     '${snapshot.data}',
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: AppColors.ruaWhite,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),

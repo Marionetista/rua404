@@ -17,10 +17,10 @@ class EmptyCalendarWidget extends StatelessWidget {
         children: [
           SvgPicture.asset('assets/images/noEventsImg.svg'),
           const SizedBox(height: 14),
-          const Text(
+          Text(
             'Sem eventos futuros :(',
             style: TextStyle(
-              color: Colors.white,
+              color: AppColors.ruaWhite,
               fontSize: 20,
               fontWeight: FontWeight.w600,
             ),
@@ -45,12 +45,12 @@ class EmptyCalendarWidget extends StatelessWidget {
                   AppUtils.openEmail();
                 },
                 borderRadius: BorderRadius.circular(48),
-                highlightColor: Colors.white,
+                highlightColor: AppColors.ruaWhite,
                 child: Container(
                   height: 48,
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: AppColors.ruaWhite,
                     borderRadius: BorderRadius.circular(48),
                   ),
                   alignment: Alignment.center,

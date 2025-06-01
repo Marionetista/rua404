@@ -26,7 +26,7 @@ class _BagPageState extends State<BagPage> {
     extendBody: true,
     appBar: AppBar(
       backgroundColor: Colors.transparent,
-      leading: const Text('RuA404', style: TextStyle(color: Colors.white)),
+      leading: Text('RuA404', style: TextStyle(color: AppColors.ruaWhite)),
       actions: [
         CircleButton(
           icon: CircleButtonIcon.exit,
@@ -51,16 +51,16 @@ class _BagPageState extends State<BagPage> {
               ),
               child: CustomScrollView(
                 slivers: [
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 16.0,
                         vertical: 10.0,
                       ),
                       child: Text(
                         'Sua sacola (2)',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: AppColors.ruaWhite,
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -160,12 +160,12 @@ class _BagPageState extends State<BagPage> {
                           HapticFeedback.mediumImpact();
                         },
                         borderRadius: BorderRadius.circular(48),
-                        highlightColor: Colors.white,
+                        highlightColor: AppColors.ruaWhite,
                         child: Container(
                           height: 48,
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: AppColors.ruaWhite,
                             borderRadius: BorderRadius.circular(48),
                           ),
                           alignment: Alignment.center,

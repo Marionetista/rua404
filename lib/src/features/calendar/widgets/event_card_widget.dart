@@ -48,8 +48,8 @@ class EventCardWidget extends StatelessWidget {
         const SizedBox(height: 12),
         Text(
           title,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: AppColors.ruaWhite,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -73,7 +73,7 @@ class EventCardWidget extends StatelessWidget {
                   HapticFeedback.mediumImpact();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColors.ruaWhite,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(48),
@@ -93,7 +93,7 @@ class EventCardWidget extends StatelessWidget {
                   HapticFeedback.mediumImpact();
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
+                  backgroundColor: AppColors.ruaWhite,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(48),
