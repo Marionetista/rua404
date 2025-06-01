@@ -1,12 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../shared/colors/app_colors.dart';
+import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../utils/app_utils.dart';
+import '../widgets/empty_calendar_widget.dart';
+import '../widgets/event_card_widget.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -16,6 +16,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  bool isEmpty = false;
+
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Colors.transparent,
@@ -38,57 +40,114 @@ class _CalendarPageState extends State<CalendarPage> {
           filter: ImageFilter.blur(sigmaX: 200, sigmaY: 200),
           child: Container(color: Colors.black.withValues(alpha: 0.4)),
         ),
-        Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SvgPicture.asset('assets/images/noEventsImg.svg'),
-              const SizedBox(height: 14),
-              const Text(
-                'Sem eventos futuros :(',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Mas estamos sempre abertos a propostas!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.greyText,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      HapticFeedback.mediumImpact();
-                      AppUtils.openEmail();
-                    },
-                    borderRadius: BorderRadius.circular(48),
-                    highlightColor: Colors.white,
-                    child: Container(
-                      height: 48,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(48),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Chame a gente!',
-                        style: TextStyle(color: Colors.black, fontSize: 16),
-                      ),
+
+        Padding(
+          padding: EdgeInsets.only(
+            top:
+                AppBar().preferredSize.height +
+                MediaQuery.of(context).padding.top,
+          ),
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 10.0,
+                  ),
+                  child: Text(
+                    'Eventos futuros',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ],
+                ),
               ),
+
+              if (isEmpty)
+                const SliverToBoxAdapter(child: EmptyCalendarWidget()),
+
+              if (!isEmpty)
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 10.0,
+                  ),
+                  sliver: SliverList.separated(
+                    itemCount: 2,
+                    separatorBuilder:
+                        (_, __) =>
+                            const Divider(color: Colors.white24, thickness: 1),
+                    itemBuilder:
+                        (_, index) => const EventCardWidget(
+                          title: 'Festival de Colantes - 3ª edição',
+                          subtitle: '16 de Novembro de 2024, Uberlândia',
+                          imagePath: 'assets/images/festival.jpg',
+                          isFutureEvent: true,
+                        ),
+                  ),
+                ),
+
+              if (!isEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0,
+                      top: 20.0,
+                      bottom: 40.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BlurTextButton(
+                          text: 'Chame a gente!',
+                          onTap: () => AppUtils.openEmail(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 10.0,
+                  ),
+                  child: Text(
+                    'Eventos anteriores',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 10.0,
+                ),
+                sliver: SliverList.separated(
+                  itemCount: 1,
+                  separatorBuilder:
+                      (_, __) =>
+                          const Divider(color: Colors.white24, thickness: 1),
+                  itemBuilder:
+                      (_, index) => const EventCardWidget(
+                        title: 'Festival de Colantes - 3ª edição',
+                        subtitle: '16 de Novembro de 2024, Uberlândia',
+                        imagePath: 'assets/images/festival.jpg',
+                        isFutureEvent: false,
+                      ),
+                ),
+              ),
+
+              const SliverToBoxAdapter(child: SizedBox(height: 20.0)),
             ],
           ),
         ),

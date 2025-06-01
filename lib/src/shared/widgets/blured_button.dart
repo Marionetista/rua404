@@ -5,10 +5,16 @@ import 'package:flutter/services.dart';
 import '../colors/app_colors.dart';
 
 class BlurTextButton extends StatelessWidget {
-  const BlurTextButton({required this.text, super.key, this.onTap});
+  const BlurTextButton({
+    required this.text,
+    super.key,
+    this.onTap,
+    this.textColor,
+  });
 
   final String text;
   final VoidCallback? onTap;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) => ClipRRect(
@@ -33,7 +39,7 @@ class BlurTextButton extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.5),
+              color: textColor ?? AppColors.ruaWhite,
               fontSize: 16,
             ),
           ),

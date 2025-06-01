@@ -27,17 +27,15 @@ class AppUtils {
     }
   }
 
-  static openEmail() async {
-    launchUrl(
-      Uri(
-        scheme: 'mailto',
-        path: 'contatorua404@gmail.com',
-        query: _encodeQueryParameters(<String, String>{
-          'subject': 'Eai Rua404! Topa participar de um evento?',
-        }),
-      ),
-    );
-  }
+  static openEmail() async => launchUrl(
+    Uri(
+      scheme: 'mailto',
+      path: 'contatorua404@gmail.com',
+      query: _encodeQueryParameters(<String, String>{
+        'subject': 'Eai Rua404! Topa participar de um evento?',
+      }),
+    ),
+  );
 
   static String? _encodeQueryParameters(Map<String, String> params) => params
       .entries

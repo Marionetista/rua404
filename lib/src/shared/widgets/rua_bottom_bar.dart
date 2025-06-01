@@ -29,6 +29,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: BlurTextButton(
                 text: 'Busque por aqui',
+                textColor: Colors.white.withValues(alpha: 0.5),
                 onTap:
                     () => Navigator.of(context).push(
                       PageRouteBuilder(
