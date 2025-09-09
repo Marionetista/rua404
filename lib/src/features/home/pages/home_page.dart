@@ -4,8 +4,8 @@ import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../bag/pages/bag_page.dart';
 import '../../calendar/pages/calendar_page.dart';
-import '../widgets/rua_bottom_bar.dart';
 import '../widgets/infinite_canvas.dart';
+import '../widgets/rua_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
