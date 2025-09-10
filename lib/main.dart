@@ -11,15 +11,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
     title: 'RuA404',
     theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
-    home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    home: const MyHomePage(),
     debugShowCheckedModeBanner: false,
   );
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({required this.title, super.key});
-
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
