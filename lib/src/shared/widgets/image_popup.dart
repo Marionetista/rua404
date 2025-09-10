@@ -221,15 +221,19 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                         ),
                                                       ],
                                                     ),
-                                                    const Row(
+                                                    Row(
                                                       children: [
-                                                        CircleButton(
-                                                          icon:
-                                                              CircleButtonIcon
-                                                                  .aircon,
+                                                        if (currentImageItem
+                                                            .hasARFilter)
+                                                          const CircleButton(
+                                                            icon:
+                                                                CircleButtonIcon
+                                                                    .aircon,
+                                                          ),
+                                                        const SizedBox(
+                                                          width: 10,
                                                         ),
-                                                        SizedBox(width: 10),
-                                                        CircleButton(
+                                                        const CircleButton(
                                                           icon:
                                                               CircleButtonIcon
                                                                   .addBag,
