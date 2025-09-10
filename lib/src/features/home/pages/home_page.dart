@@ -66,10 +66,7 @@ class _HomePageState extends State<HomePage> {
         const SizedBox(width: 20),
       ],
     ),
-    body: StaggeredGridView(
-      selectedFilter: _selectedFilter,
-      onFilterChanged: _onFilterChanged,
-    ),
+    body: StaggeredGridView(selectedFilter: _selectedFilter),
 
     bottomNavigationBar: CustomBottomNavBar(
       selectedFilter: _selectedFilter,

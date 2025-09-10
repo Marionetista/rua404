@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 
 import '../colors/app_colors.dart';
 import '../enums/filter_type.dart';
+import '../models/image_item.dart';
 import 'blured_button.dart';
 import 'circle_button.dart';
 import 'flying_cover.dart';
 
 class ImagePopup extends StatefulWidget {
-  const ImagePopup({
-    required this.imagePath,
-    required this.onClose,
-    this.imageTypes = const [],
-    super.key,
-  });
+  const ImagePopup({required this.imageItem, required this.onClose, super.key});
 
-  final String imagePath;
+  final ImageItem imageItem;
   final VoidCallback onClose;
-  final List<FilterType> imageTypes;
 
   @override
   State<ImagePopup> createState() => _ImagePopupState();
@@ -30,9 +25,15 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
   late Animation<double> _contentOpacity;
   late Animation<double> _contentSlide;
 
+  // Variável para controlar a imagem atual selecionada
+  late ImageItem _currentImageItem;
+
   @override
   void initState() {
     super.initState();
+
+    // Inicializar com a imagem padrão
+    _currentImageItem = widget.imageItem;
 
     // Controller para animação da imagem
     _imageController = AnimationController(
@@ -87,16 +88,82 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
   }
 
   String _getImageTypeText() {
-    if (widget.imageTypes.contains(FilterType.prints) &&
-        widget.imageTypes.contains(FilterType.stickers)) {
+    final types = _currentImageItem.types;
+    if (types.contains(FilterType.prints) &&
+        types.contains(FilterType.stickers)) {
       return 'Print & Sticker';
-    } else if (widget.imageTypes.contains(FilterType.prints)) {
+    } else if (types.contains(FilterType.prints)) {
       return 'Print';
-    } else if (widget.imageTypes.contains(FilterType.stickers)) {
+    } else if (types.contains(FilterType.stickers)) {
       return 'Sticker';
     }
     return 'Print'; // Default
   }
+
+  Widget _buildVariationsSection() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const SizedBox(height: 6),
+      SizedBox(
+        height: 60,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: _currentImageItem.variations.length,
+          itemBuilder: (context, index) {
+            final variation = _currentImageItem.variations[index];
+            final isSelected = variation == _currentImageItem.url;
+
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _currentImageItem = _currentImageItem.copyWithUrl(variation);
+                });
+              },
+              child: Container(
+                width: 60,
+                height: 60,
+                margin: const EdgeInsets.only(right: 12),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color:
+                        isSelected
+                            ? AppColors.ruaWhite
+                            : Colors.grey.withValues(alpha: 0.3),
+                    width: isSelected ? 2 : 1,
+                  ),
+                  boxShadow:
+                      isSelected
+                          ? [
+                            BoxShadow(
+                              color: AppColors.ruaWhite.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              spreadRadius: 2,
+                            ),
+                          ]
+                          : null,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: Image.asset(
+                    variation,
+                    fit: BoxFit.cover,
+                    errorBuilder:
+                        (context, error, stackTrace) => Container(
+                          color: Colors.grey[300],
+                          child: const Center(
+                            child: Icon(Icons.error, color: Colors.grey),
+                          ),
+                        ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -135,11 +202,11 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                         children: [
                           // Imagem com FlyingCover (zoom e swipe para fechar)
                           FlyingCover(
-                            imgUrl: widget.imagePath,
+                            imgUrl: _currentImageItem.url,
                             onTap: widget.onClose,
                             width: 250,
                             height: 300,
-                            imageTypes: widget.imageTypes,
+                            imageTypes: _currentImageItem.types,
                           ),
 
                           const SizedBox(height: 30),
@@ -180,7 +247,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    'Páginas Mock Mangá',
+                                                    _currentImageItem.title,
                                                     style: TextStyle(
                                                       color: AppColors.ruaWhite,
                                                       fontSize: 18,
@@ -214,6 +281,14 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                             ],
                                           ),
                                           const SizedBox(height: 20),
+
+                                          // Seção de variações
+                                          if (_currentImageItem
+                                              .hasVariations) ...[
+                                            _buildVariationsSection(),
+                                            const SizedBox(height: 20),
+                                          ],
+
                                           Text(
                                             'Sobre a peça',
                                             style: TextStyle(
@@ -224,7 +299,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
-                                            'Lorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elitLorem ipsum dolor sit amet, consectetur adipiscing elit...',
+                                            _currentImageItem.description,
                                             style: TextStyle(
                                               color: AppColors.greyText,
                                               fontSize: 14,
@@ -233,11 +308,17 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                             maxLines: 3,
                                           ),
                                           const SizedBox(height: 20),
-                                          const SizedBox(
-                                            width: 130,
-                                            child: BlurTextButton(
-                                              text: 'Ler mais',
-                                            ),
+                                          const Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: 130,
+                                                child: BlurTextButton(
+                                                  text: 'Ler mais',
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),

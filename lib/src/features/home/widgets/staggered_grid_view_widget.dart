@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../../shared/enums/filter_type.dart';
+import '../../../shared/models/image_item.dart';
 import '../../../shared/widgets/image_popup.dart';
 
 // Pool de imagens para o staggered grid
@@ -177,15 +178,14 @@ class StaggeredGridViewWidget extends StatefulWidget {
 }
 
 class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
-  void _openImagePopup(String imagePath, List<FilterType> imageTypes) {
+  void _openImagePopup(ImageItem imageItem) {
     showDialog(
       context: context,
       barrierDismissible: true,
       barrierColor: Colors.transparent,
       builder:
           (BuildContext context) => ImagePopup(
-            imagePath: imagePath,
-            imageTypes: imageTypes,
+            imageItem: imageItem,
             onClose: () => Navigator.of(context).pop(),
           ),
     );
@@ -204,7 +204,7 @@ class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
         final aspectRatio = imageData['width'] / imageData['height'];
 
         return GestureDetector(
-          onTap: () => _openImagePopup(imageData['url'], imageData['types']),
+          onTap: () => _openImagePopup(ImageItem.fromMap(imageData)),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
