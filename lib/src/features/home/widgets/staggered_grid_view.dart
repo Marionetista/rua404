@@ -175,12 +175,13 @@ class StaggeredGridView extends StatefulWidget {
 }
 
 class _StaggeredGridViewState extends State<StaggeredGridView> {
-  void _openImagePopup(String imageUrl) => showDialog(
+  void _openImagePopup(String imageUrl, List<FilterType> imageTypes) => showDialog(
     context: context,
     barrierDismissible: true,
     builder:
         (context) => ImagePopup(
           imagePath: imageUrl,
+          imageTypes: imageTypes,
           onClose: () => Navigator.of(context).pop(),
         ),
   );
@@ -208,7 +209,7 @@ class _StaggeredGridViewState extends State<StaggeredGridView> {
         final aspectRatio = imageData['width'] / imageData['height'];
 
         return GestureDetector(
-          onTap: () => _openImagePopup(imageData['url']),
+          onTap: () => _openImagePopup(imageData['url'], imageData['types']),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

@@ -18,11 +18,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   FilterType _selectedFilter = FilterType.todos;
 
-  void _onFilterChanged(FilterType filter) {
-    setState(() {
-      _selectedFilter = filter;
-    });
-  }
+  void _onFilterChanged(FilterType filter) =>
+      setState(() => _selectedFilter = filter);
 
   @override
   Widget build(BuildContext context) => Scaffold(

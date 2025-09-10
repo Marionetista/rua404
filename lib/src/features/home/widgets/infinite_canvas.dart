@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../../shared/colors/app_colors.dart';
+import '../../../shared/enums/filter_type.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../shared/widgets/flying_cover.dart';
@@ -20,7 +21,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 200.0,
     'height': 150.0,
     'title': 'Doggie',
-    'type': ['Print', 'Sticker', 'Classico'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
   {
@@ -28,7 +29,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 150.0,
     'height': 200.0,
     'title': 'Rua Caxin',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -36,7 +37,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 250.0,
     'height': 180.0,
     'title': 'RuA Fake PNG',
-    'type': ['Sticker', 'Classico'],
+    'types': [FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
   {
@@ -44,7 +45,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 180.0,
     'height': 220.0,
     'title': 'Gato',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -52,7 +53,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 120.0,
     'height': 160.0,
     'title': 'Doggie NOID',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -60,7 +61,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 200.0,
     'height': 250.0,
     'title': 'Doggie P.I.M.P',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -68,7 +69,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 300.0,
     'height': 200.0,
     'title': 'Festival',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -76,7 +77,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 140.0,
     'height': 190.0,
     'title': 'Doggie NOID 2',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -84,7 +85,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 220.0,
     'height': 160.0,
     'title': 'Gato 2',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -92,7 +93,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 180.0,
     'height': 140.0,
     'title': 'Doggie 2',
-    'type': ['Print', 'Sticker', 'Classico'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
   {
@@ -100,7 +101,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 190.0,
     'height': 170.0,
     'title': 'Rua Caxin 2',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -108,7 +109,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 160.0,
     'height': 200.0,
     'title': 'RuA Fake PNG 2',
-    'type': ['Sticker', 'Classico'],
+    'types': [FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
   {
@@ -116,7 +117,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 240.0,
     'height': 180.0,
     'title': 'Doggie P.I.M.P 2',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -124,7 +125,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 280.0,
     'height': 220.0,
     'title': 'Festival 2',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -132,7 +133,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 200.0,
     'height': 180.0,
     'title': 'Gato 3',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -140,7 +141,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 170.0,
     'height': 130.0,
     'title': 'Doggie 3',
-    'type': ['Print', 'Sticker', 'Classico'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
   {
@@ -148,7 +149,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 130.0,
     'height': 180.0,
     'title': 'Doggie NOID 3',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -156,7 +157,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 210.0,
     'height': 160.0,
     'title': 'Rua Caxin 3',
-    'type': ['Print', 'Sticker', 'Collab'],
+    'types': [FilterType.prints, FilterType.stickers, FilterType.collabs],
     'collab': true,
   },
   {
@@ -164,7 +165,7 @@ final List<Map<String, dynamic>> imagePool = [
     'width': 190.0,
     'height': 240.0,
     'title': 'RuA Fake PNG 3',
-    'type': ['Sticker', 'Classico'],
+    'types': [FilterType.stickers, FilterType.classicos],
     'collab': false,
   },
 ];
@@ -343,7 +344,11 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
           left: x,
           top: y,
           child: GestureDetector(
-            onTap: () => openImage(selectedImageData['url']),
+            onTap:
+                () => openImage(
+                  selectedImageData['url'],
+                  selectedImageData['types'],
+                ),
             child: Container(
               width: selectedImageData['width'],
               height: selectedImageData['height'],
@@ -387,7 +392,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
     });
   }
 
-  void openImage(String imagePath) {
+  void openImage(String imagePath, List<FilterType> imageTypes) {
     setState(() {
       showPopup = true;
       selectedImage = imagePath;
@@ -400,6 +405,7 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
       builder:
           (BuildContext context) => _ImagePopup(
             imagePath: imagePath,
+            imageTypes: imageTypes,
             onClose: () {
               Navigator.of(context).pop();
               if (mounted) {
@@ -440,10 +446,15 @@ class InfiniteCanvasState extends State<InfiniteCanvas> {
 }
 
 class _ImagePopup extends StatefulWidget {
-  const _ImagePopup({required this.imagePath, required this.onClose});
+  const _ImagePopup({
+    required this.imagePath,
+    required this.onClose,
+    this.imageTypes = const [],
+  });
 
   final String imagePath;
   final VoidCallback onClose;
+  final List<FilterType> imageTypes;
 
   @override
   State<_ImagePopup> createState() => _ImagePopupState();
@@ -513,6 +524,18 @@ class _ImagePopupState extends State<_ImagePopup>
     super.dispose();
   }
 
+  String _getImageTypeText() {
+    if (widget.imageTypes.contains(FilterType.prints) &&
+        widget.imageTypes.contains(FilterType.stickers)) {
+      return 'Print & Sticker';
+    } else if (widget.imageTypes.contains(FilterType.prints)) {
+      return 'Print';
+    } else if (widget.imageTypes.contains(FilterType.stickers)) {
+      return 'Sticker';
+    }
+    return 'Print'; // Default
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -555,6 +578,7 @@ class _ImagePopupState extends State<_ImagePopup>
                             onTap: widget.onClose,
                             width: 250,
                             height: 300,
+                            imageTypes: widget.imageTypes,
                           ),
 
                           const SizedBox(height: 30),
@@ -605,7 +629,7 @@ class _ImagePopupState extends State<_ImagePopup>
                                                   ),
                                                   const SizedBox(height: 4),
                                                   Text(
-                                                    'Print',
+                                                    _getImageTypeText(),
                                                     style: TextStyle(
                                                       color: AppColors.greyText,
                                                       fontSize: 14,

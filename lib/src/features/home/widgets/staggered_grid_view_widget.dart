@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../../shared/enums/filter_type.dart';
 import '../../../shared/widgets/image_popup.dart';
 
 // Pool de imagens para o staggered grid
@@ -10,7 +11,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 200.0,
     'height': 150.0,
     'title': 'Doggie',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': false,
   },
   {
@@ -18,7 +19,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 150.0,
     'height': 200.0,
     'title': 'Rua Caxin',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -26,7 +27,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 250.0,
     'height': 180.0,
     'title': 'RuA Fake PNG',
-    'type': ['Sticker'],
+    'types': [FilterType.stickers],
     'collab': false,
   },
   {
@@ -34,7 +35,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 180.0,
     'height': 220.0,
     'title': 'Gato',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -42,7 +43,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 120.0,
     'height': 160.0,
     'title': 'Doggie NOID',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -50,7 +51,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 200.0,
     'height': 250.0,
     'title': 'Doggie P.I.M.P',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -58,7 +59,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 300.0,
     'height': 200.0,
     'title': 'Festival',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -66,7 +67,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 160.0,
     'height': 160.0,
     'title': 'Sacola Vazia',
-    'type': ['Sticker'],
+    'types': [FilterType.stickers],
     'collab': false,
   },
   {
@@ -74,7 +75,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 140.0,
     'height': 190.0,
     'title': 'Doggie NOID 2',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -82,7 +83,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 220.0,
     'height': 160.0,
     'title': 'Gato 2',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -90,7 +91,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 180.0,
     'height': 140.0,
     'title': 'Doggie 2',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': false,
   },
   {
@@ -98,7 +99,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 190.0,
     'height': 170.0,
     'title': 'Rua Caxin 2',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -106,7 +107,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 160.0,
     'height': 200.0,
     'title': 'RuA Fake PNG 2',
-    'type': ['Sticker'],
+    'types': [FilterType.stickers],
     'collab': false,
   },
   {
@@ -114,7 +115,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 240.0,
     'height': 180.0,
     'title': 'Doggie P.I.M.P 2',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -122,7 +123,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 280.0,
     'height': 220.0,
     'title': 'Festival 2',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -130,7 +131,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 200.0,
     'height': 180.0,
     'title': 'Gato 3',
-    'type': ['Print'],
+    'types': [FilterType.prints],
     'collab': false,
   },
   {
@@ -138,7 +139,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 170.0,
     'height': 130.0,
     'title': 'Doggie 3',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': false,
   },
   {
@@ -146,7 +147,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 130.0,
     'height': 180.0,
     'title': 'Doggie NOID 3',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -154,7 +155,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 210.0,
     'height': 160.0,
     'title': 'Rua Caxin 3',
-    'type': ['Print', 'Sticker'],
+    'types': [FilterType.prints, FilterType.stickers],
     'collab': true,
   },
   {
@@ -162,7 +163,7 @@ final List<Map<String, dynamic>> staggeredImagePool = [
     'width': 190.0,
     'height': 240.0,
     'title': 'RuA Fake PNG 3',
-    'type': ['Sticker'],
+    'types': [FilterType.stickers],
     'collab': false,
   },
 ];
@@ -176,7 +177,7 @@ class StaggeredGridViewWidget extends StatefulWidget {
 }
 
 class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
-  void _openImagePopup(String imagePath) {
+  void _openImagePopup(String imagePath, List<FilterType> imageTypes) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -184,6 +185,7 @@ class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
       builder:
           (BuildContext context) => ImagePopup(
             imagePath: imagePath,
+            imageTypes: imageTypes,
             onClose: () => Navigator.of(context).pop(),
           ),
     );
@@ -202,7 +204,7 @@ class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
         final aspectRatio = imageData['width'] / imageData['height'];
 
         return GestureDetector(
-          onTap: () => _openImagePopup(imageData['url']),
+          onTap: () => _openImagePopup(imageData['url'], imageData['types']),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

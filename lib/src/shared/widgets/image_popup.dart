@@ -2,15 +2,22 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../colors/app_colors.dart';
+import '../enums/filter_type.dart';
 import 'blured_button.dart';
 import 'circle_button.dart';
 import 'flying_cover.dart';
 
 class ImagePopup extends StatefulWidget {
-  const ImagePopup({required this.imagePath, required this.onClose, super.key});
+  const ImagePopup({
+    required this.imagePath,
+    required this.onClose,
+    this.imageTypes = const [],
+    super.key,
+  });
 
   final String imagePath;
   final VoidCallback onClose;
+  final List<FilterType> imageTypes;
 
   @override
   State<ImagePopup> createState() => _ImagePopupState();
@@ -79,6 +86,18 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  String _getImageTypeText() {
+    if (widget.imageTypes.contains(FilterType.prints) &&
+        widget.imageTypes.contains(FilterType.stickers)) {
+      return 'Print & Sticker';
+    } else if (widget.imageTypes.contains(FilterType.prints)) {
+      return 'Print';
+    } else if (widget.imageTypes.contains(FilterType.stickers)) {
+      return 'Sticker';
+    }
+    return 'Print'; // Default
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -87,7 +106,6 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
       color: Colors.transparent,
       child: Stack(
         children: [
-          // Background com blur
           GestureDetector(
             onTap: widget.onClose,
             child: BackdropFilter(
@@ -121,6 +139,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                             onTap: widget.onClose,
                             width: 250,
                             height: 300,
+                            imageTypes: widget.imageTypes,
                           ),
 
                           const SizedBox(height: 30),
@@ -171,7 +190,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                   ),
                                                   const SizedBox(height: 4),
                                                   Text(
-                                                    'Print',
+                                                    _getImageTypeText(),
                                                     style: TextStyle(
                                                       color: AppColors.greyText,
                                                       fontSize: 14,

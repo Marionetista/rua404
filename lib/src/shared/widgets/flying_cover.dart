@@ -1,5 +1,9 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+
+import '../enums/filter_type.dart';
 
 class FlyingCover extends StatefulWidget {
   const FlyingCover({
@@ -8,12 +12,14 @@ class FlyingCover extends StatefulWidget {
     this.imgUrl,
     this.width = 250,
     this.height = 300,
+    this.imageTypes = const [],
   });
 
   final String? imgUrl;
   final VoidCallback onTap;
   final double width;
   final double height;
+  final List<FilterType> imageTypes;
 
   @override
   State<FlyingCover> createState() => _FlyingCoverState();
@@ -35,9 +41,21 @@ class _FlyingCoverState extends State<FlyingCover>
   double _scale = 1.0;
   double _baseScale = 1.0;
 
+  // Variáveis para o efeito de giroscópio
+  StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
+  double _gyroX = 0.0;
+  double _gyroY = 0.0;
+  double _gyroZ = 0.0;
+  bool _hasGyroscopeEffect = false;
+
   @override
   void initState() {
     super.initState();
+
+    // Verificar se a imagem é do tipo Print ou Sticker
+    _hasGyroscopeEffect =
+        widget.imageTypes.contains(FilterType.prints) ||
+        widget.imageTypes.contains(FilterType.stickers);
 
     _transformationController = TransformationController();
 
@@ -68,6 +86,11 @@ class _FlyingCoverState extends State<FlyingCover>
     ).animate(
       CurvedAnimation(parent: _flyAwayController, curve: Curves.easeOut),
     );
+
+    // Configurar giroscópio se necessário
+    if (_hasGyroscopeEffect) {
+      _setupGyroscope();
+    }
   }
 
   void _flyAway() {
@@ -195,25 +218,78 @@ class _FlyingCoverState extends State<FlyingCover>
         offset: _panOffset,
         child: Transform.scale(
           scale: _scale,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 20,
-                  spreadRadius: 5,
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                widget.imgUrl ?? 'assets/images/pimp.png',
-                width: widget.width,
-                height: widget.height,
-                fit: BoxFit.cover,
+          child:
+              _hasGyroscopeEffect
+                  ? _buildGyroscopeTransform()
+                  : _buildNormalContainer(),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNormalContainer() => Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.3),
+          blurRadius: 20,
+          spreadRadius: 5,
+        ),
+      ],
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Image.asset(
+        widget.imgUrl ?? 'assets/images/pimp.png',
+        width: widget.width,
+        height: widget.height,
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
+
+  Widget _buildGyroscopeTransform() {
+    // Calcular as transformações 3D baseadas no giroscópio
+    final double rotationX =
+        _gyroY * 0.1; // Rotação em X baseada no movimento Y
+    final double rotationY =
+        _gyroX * 0.1; // Rotação em Y baseada no movimento X
+    final double rotationZ =
+        _gyroZ * 0.05; // Rotação em Z baseada no movimento Z
+
+    // Calcular offset para efeito de paralaxe
+    final double offsetX = _gyroX * 20;
+    final double offsetY = _gyroY * 20;
+
+    return Transform(
+      alignment: Alignment.center,
+      transform:
+          Matrix4.identity()
+            ..setEntry(3, 2, 0.001) // Perspectiva
+            ..rotateX(rotationX)
+            ..rotateY(rotationY)
+            ..rotateZ(rotationZ),
+      child: Transform.translate(
+        offset: Offset(offsetX, offsetY),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.3),
+                blurRadius: 20,
+                spreadRadius: 5,
               ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              widget.imgUrl ?? 'assets/images/pimp.png',
+              width: widget.width,
+              height: widget.height,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -221,10 +297,26 @@ class _FlyingCoverState extends State<FlyingCover>
     );
   }
 
+  void _setupGyroscope() {
+    _gyroscopeSubscription = gyroscopeEventStream().listen((
+      GyroscopeEvent event,
+    ) {
+      if (mounted) {
+        setState(() {
+          // Suavizar os valores do giroscópio para um efeito mais natural
+          _gyroX = _gyroX * 0.8 + event.x * 0.2;
+          _gyroY = _gyroY * 0.8 + event.y * 0.2;
+          _gyroZ = _gyroZ * 0.8 + event.z * 0.2;
+        });
+      }
+    });
+  }
+
   @override
   void dispose() {
     _flyAwayController.dispose();
     _transformationController.dispose();
+    _gyroscopeSubscription?.cancel();
     super.dispose();
   }
 }
