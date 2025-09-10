@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/colors/app_colors.dart';
+import '../../../shared/enums/filter_type.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../calendar/pages/calendar_page.dart';
@@ -8,7 +9,14 @@ import '../../settings/pages/settings_page.dart';
 import 'bullet_button_widget.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
-  const CustomBottomNavBar({super.key});
+  const CustomBottomNavBar({
+    required this.onFilterChanged,
+    required this.selectedFilter,
+    super.key,
+  });
+
+  final FilterType selectedFilter;
+  final Function(FilterType) onFilterChanged;
 
   @override
   State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
@@ -22,17 +30,19 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: List.generate(
-            10,
-            (index) => Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: BulletButton(
-                label: 'Tag $index',
-                onTap: () {},
-                isSelected: index == 1 ? true : false,
-              ),
-            ),
-          ),
+          children:
+              FilterType.values
+                  .map(
+                    (filter) => Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: BulletButton(
+                        label: filter.label,
+                        onTap: () => widget.onFilterChanged(filter),
+                        isSelected: widget.selectedFilter == filter,
+                      ),
+                    ),
+                  )
+                  .toList(),
         ),
       ),
       Padding(
@@ -40,7 +50,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
         child: Container(
           height: 100,
           decoration: BoxDecoration(
-            color: Colors.transparent,
+            color: Colors.black.withValues(alpha: 0.4),
             border: Border(
               top: BorderSide(color: AppColors.halfWhite, width: 1),
             ),
