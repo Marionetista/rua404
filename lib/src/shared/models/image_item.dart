@@ -3,15 +3,6 @@ import 'package:equatable/equatable.dart';
 import '../enums/filter_type.dart';
 
 class ImageItem extends Equatable {
-  final String url;
-  final double width;
-  final double height;
-  final List<FilterType> types;
-  final String title;
-  final String description;
-  final List<String> variations;
-  final bool isCollab;
-
   // Factory constructor para criar a partir de Map (compatibilidade com código existente)
   factory ImageItem.fromMap(Map<String, dynamic> map) => ImageItem(
     url: map['url'] as String,
@@ -37,6 +28,15 @@ class ImageItem extends Equatable {
     this.variations = const [],
     this.isCollab = false,
   });
+
+  final String url;
+  final double width;
+  final double height;
+  final List<FilterType> types;
+  final String title;
+  final String description;
+  final List<String> variations;
+  final bool isCollab;
 
   // Método para converter para Map (compatibilidade com código existente)
   Map<String, dynamic> toMap() => {
