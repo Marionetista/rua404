@@ -16,6 +16,12 @@ class ImageItem extends Equatable {
             ? List<String>.from(map['variations'] as List)
             : const [],
     isCollab: map['collab'] as bool? ?? false,
+    marketable: map['marketable'] as bool? ?? true,
+    hasARFilter: map['hasARFilter'] as bool? ?? false,
+    size: map['size'] as String,
+    weight: map['weight'] as String,
+    materialType: map['materialType'] as String,
+    printing: map['printing'] as String,
   );
 
   const ImageItem({
@@ -27,6 +33,12 @@ class ImageItem extends Equatable {
     required this.description,
     this.variations = const [],
     this.isCollab = false,
+    this.marketable = true,
+    this.hasARFilter = false,
+    this.size,
+    this.weight,
+    this.materialType,
+    this.printing,
   });
 
   final String url;
@@ -37,6 +49,12 @@ class ImageItem extends Equatable {
   final String description;
   final List<String> variations;
   final bool isCollab;
+  final bool marketable;
+  final bool hasARFilter;
+  final String? size;
+  final String? weight;
+  final String? materialType;
+  final String? printing;
 
   // Método para converter para Map (compatibilidade com código existente)
   Map<String, dynamic> toMap() => {
@@ -48,6 +66,12 @@ class ImageItem extends Equatable {
     'description': description,
     'variations': variations,
     'collab': isCollab,
+    'marketable': marketable,
+    'hasARFilter': hasARFilter,
+    'size': size,
+    'weight': weight,
+    'materialType': materialType,
+    'printing': printing,
   };
 
   // Método para obter a URL atual (considerando variações)
@@ -55,6 +79,9 @@ class ImageItem extends Equatable {
 
   // Método para verificar se tem variações
   bool get hasVariations => variations.isNotEmpty;
+
+  // Metodo para verificar se o produto está disponível para venda.
+  bool get isMarketable => marketable; //&& qtDisponível > 0
 
   // Método para obter todas as URLs (incluindo a principal e variações)
   List<String> get allUrls => [url, ...variations];
@@ -69,6 +96,12 @@ class ImageItem extends Equatable {
     description: description,
     variations: variations,
     isCollab: isCollab,
+    marketable: marketable,
+    hasARFilter: hasARFilter,
+    size: size,
+    weight: weight,
+    materialType: materialType,
+    printing: printing,
   );
 
   @override
@@ -81,5 +114,11 @@ class ImageItem extends Equatable {
     description,
     variations,
     isCollab,
+    marketable,
+    hasARFilter,
+    size,
+    weight,
+    materialType,
+    printing,
   ];
 }

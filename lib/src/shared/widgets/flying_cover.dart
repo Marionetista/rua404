@@ -32,14 +32,9 @@ class _FlyingCoverState extends State<FlyingCover>
   late Animation<double> _rotationAnimation;
   late Animation<double> _scaleAnimation;
 
-  // Controle de zoom e pan
-  late TransformationController _transformationController;
-
-  bool _hasFlownAway = false;
-  bool _isZoomed = false;
+  // Controle de pan (movimento suave)
   Offset _panOffset = Offset.zero;
-  double _scale = 1.0;
-  double _baseScale = 1.0;
+  bool _hasFlownAway = false;
 
   // Variáveis para o efeito de giroscópio
   StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
@@ -48,16 +43,19 @@ class _FlyingCoverState extends State<FlyingCover>
   double _gyroZ = 0.0;
   bool _hasGyroscopeEffect = false;
 
+  // Variáveis para o efeito holográfico
+  late Animation<double> _holographicAnimation;
+
   @override
   void initState() {
     super.initState();
 
-    // Verificar se a imagem é do tipo Print ou Sticker
+    // Verificar se a imagem é do tipo Print ou Sticker para giroscópio
     _hasGyroscopeEffect =
         widget.imageTypes.contains(FilterType.prints) ||
         widget.imageTypes.contains(FilterType.stickers);
 
-    _transformationController = TransformationController();
+    // Verificar se a imagem é do tipo Holográfico
 
     // Controller para animação de voo
     _flyAwayController = AnimationController(
@@ -100,86 +98,31 @@ class _FlyingCoverState extends State<FlyingCover>
     _flyAwayController.forward().whenComplete(() => widget.onTap());
   }
 
-  void _handleScaleStart(ScaleStartDetails details) {
-    _baseScale = _scale;
+  void _handlePanStart(DragStartDetails details) {
+    // Não faz nada no início do pan
   }
 
-  void _handleScaleUpdate(ScaleUpdateDetails details) {
+  void _handlePanUpdate(DragUpdateDetails details) {
     if (_hasFlownAway) return;
 
-    // Se é um gesto de escala (dois dedos), atualiza o zoom
-    if (details.scale != 1.0) {
-      setState(() {
-        _scale = (_baseScale * details.scale).clamp(0.5, 3.0);
-      });
-    }
-    // Se é um gesto de pan (um dedo) e não está com zoom
-    else if (!_isZoomed && details.focalPointDelta != Offset.zero) {
-      setState(() {
-        _panOffset += details.focalPointDelta;
-      });
+    setState(() => _panOffset += details.delta);
 
-      // Se arrastou muito para cima, inicia o voo
-      if (_panOffset.dy < -100) {
-        _flyAway();
-      }
+    // Se arrastou muito para cima, inicia o voo
+    if (_panOffset.dy < -100) {
+      _flyAway();
     }
   }
 
-  void _handleScaleEnd(ScaleEndDetails details) {
+  void _handlePanEnd(DragEndDetails details) {
     if (_hasFlownAway) return;
 
-    _baseScale = _scale;
-
-    // Se é um gesto de pan (um dedo) e não está com zoom
-    if (!_isZoomed && details.velocity.pixelsPerSecond != Offset.zero) {
-      // Se a velocidade for alta para cima, inicia o voo
-      if (details.velocity.pixelsPerSecond.dy < -500) {
-        _flyAway();
-      } else {
-        // Retorna para a posição original
-        setState(() {
-          _panOffset = Offset.zero;
-        });
-      }
+    // Se a velocidade for alta para cima, inicia o voo
+    if (details.velocity.pixelsPerSecond.dy < -500) {
+      _flyAway();
+    } else {
+      // Retorna para a posição original com animação suave
+      setState(() => _panOffset = Offset.zero);
     }
-    // Se é um gesto de escala
-    else {
-      // Se o zoom for muito pequeno, volta ao normal
-      if (_scale < 0.8) {
-        setState(() {
-          _scale = 1.0;
-          _baseScale = 1.0;
-          _isZoomed = false;
-        });
-      } else if (_scale > 1.2) {
-        setState(() {
-          _isZoomed = true;
-        });
-      } else {
-        setState(() {
-          _scale = 1.0;
-          _baseScale = 1.0;
-          _isZoomed = false;
-        });
-      }
-    }
-  }
-
-  void _doubleTapZoom() {
-    if (_hasFlownAway) return;
-
-    setState(() {
-      if (_isZoomed) {
-        _scale = 1.0;
-        _baseScale = 1.0;
-        _isZoomed = false;
-      } else {
-        _scale = 2.0;
-        _baseScale = 2.0;
-        _isZoomed = true;
-      }
-    });
   }
 
   @override
@@ -210,19 +153,15 @@ class _FlyingCoverState extends State<FlyingCover>
     }
 
     return GestureDetector(
-      onScaleStart: _handleScaleStart,
-      onScaleUpdate: _handleScaleUpdate,
-      onScaleEnd: _handleScaleEnd,
-      onDoubleTap: _doubleTapZoom,
+      onPanStart: _handlePanStart,
+      onPanUpdate: _handlePanUpdate,
+      onPanEnd: _handlePanEnd,
       child: Transform.translate(
         offset: _panOffset,
-        child: Transform.scale(
-          scale: _scale,
-          child:
-              _hasGyroscopeEffect
-                  ? _buildGyroscopeTransform()
-                  : _buildNormalContainer(),
-        ),
+        child:
+            _hasGyroscopeEffect
+                ? _buildGyroscopeTransform()
+                : _buildNormalContainer(),
       ),
     );
   }
@@ -315,7 +254,6 @@ class _FlyingCoverState extends State<FlyingCover>
   @override
   void dispose() {
     _flyAwayController.dispose();
-    _transformationController.dispose();
     _gyroscopeSubscription?.cancel();
     super.dispose();
   }
