@@ -4,7 +4,7 @@ import '../../../shared/colors/app_colors.dart';
 import '../../../shared/enums/filter_type.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
-import '../../calendar/pages/calendar_page.dart';
+import '../../search/search_page.dart';
 import '../../settings/pages/settings_page.dart';
 import 'bullet_button_widget.dart';
 
@@ -72,7 +72,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                             ),
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    const CalendarPage(),
+                                    const SearchPage(),
                             transitionsBuilder: (
                               context,
                               animation,

@@ -161,6 +161,7 @@ class ArtDetailPage extends StatelessWidget {
                         ),
                         Row(
                           children: [
+                            const CircleFavoriteButton(isFavorited: true),
                             if (currentImageItem.hasARFilter)
                               const CircleButton(icon: CircleButtonIcon.aircon),
                           ],
@@ -208,20 +209,54 @@ class ArtDetailPage extends StatelessWidget {
                     const SizedBox(height: 10),
 
                     // Tabela de especificações do produto
-                    Column(
-                      children: [
-                        _buildSpecificationRow(
-                          'Tamanho',
-                          'Papel A3 (297 mm x 420 mm)',
+                    currentImageItem.hasAnyDescription
+                        ? Column(
+                          children: [
+                            if ((currentImageItem.size ?? '').isNotEmpty) ...[
+                              _buildSpecificationRow(
+                                'Tamanho',
+                                'Papel A3 (297 mm x 420 mm)',
+                              ),
+                              const Divider(color: Colors.grey, height: 20),
+                            ],
+
+                            if ((currentImageItem.weight ?? '').isNotEmpty) ...[
+                              _buildSpecificationRow('Peso', '261g'),
+                              const Divider(color: Colors.grey, height: 20),
+                            ],
+
+                            if ((currentImageItem.materialType ?? '')
+                                .isNotEmpty) ...[
+                              _buildSpecificationRow(
+                                'Material',
+                                'Papel liso 90g/m²',
+                              ),
+                              const Divider(color: Colors.grey, height: 20),
+                            ],
+
+                            if ((currentImageItem.printing ?? '')
+                                .isNotEmpty) ...[
+                              _buildSpecificationRow(
+                                'Impressão',
+                                'Preto e branco',
+                              ),
+                              const Divider(color: Colors.grey, height: 20),
+                            ],
+
+                            if (currentImageItem.isCollab)
+                              _buildSpecificationRow('Collab', '@caxin'),
+                          ],
+                        )
+                        : Center(
+                          child: Text(
+                            'Obra sem descrição',
+                            style: TextStyle(
+                              color: AppColors.greyText,
+                              fontSize: 14,
+                              height: 1.4,
+                            ),
+                          ),
                         ),
-                        const Divider(color: Colors.grey, height: 20),
-                        _buildSpecificationRow('Peso', '261g'),
-                        const Divider(color: Colors.grey, height: 20),
-                        _buildSpecificationRow('Material', 'Papel liso 90g/m²'),
-                        const Divider(color: Colors.grey, height: 20),
-                        _buildSpecificationRow('Impressão', 'Preto e branco'),
-                      ],
-                    ),
 
                     // Espaço extra para o bottom navigation
                     const SizedBox(height: 120),

@@ -115,3 +115,53 @@ class CircleButton extends StatelessWidget {
     );
   }
 }
+
+class CircleFavoriteButton extends StatelessWidget {
+  const CircleFavoriteButton({
+    this.splashColor,
+    this.onTap,
+    this.isFavorited = false,
+    super.key,
+  });
+
+  final Color? splashColor;
+  final Function()? onTap;
+  final bool isFavorited;
+
+  @override
+  Widget build(BuildContext context) => Tooltip(
+    message: 'Favoritar',
+    child: InkWell(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap?.call();
+      },
+      borderRadius: BorderRadius.circular(48),
+      splashColor: splashColor ?? Colors.purpleAccent,
+      highlightColor: Colors.transparent,
+      child: ClipOval(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: AppColors.halfWhite,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.transparent, width: 0),
+            ),
+            child: Center(
+              child:
+                  isFavorited
+                      ? const Icon(Icons.favorite, color: Colors.red)
+                      : Icon(
+                        Icons.favorite_outline_sharp,
+                        color: AppColors.ruaWhite,
+                      ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}

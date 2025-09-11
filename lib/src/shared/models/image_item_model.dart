@@ -10,7 +10,7 @@ class ImageItem extends Equatable {
     height: (map['height'] as num).toDouble(),
     types: List<FilterType>.from(map['types'] as List),
     title: map['title'] as String,
-    description: map['description'] as String,
+    description: map['description'] as String? ?? 'Descrição não disponível',
     variations:
         map['variations'] != null
             ? List<String>.from(map['variations'] as List)
@@ -18,10 +18,10 @@ class ImageItem extends Equatable {
     isCollab: map['collab'] as bool? ?? false,
     marketable: map['marketable'] as bool? ?? true,
     hasARFilter: map['hasARFilter'] as bool? ?? false,
-    size: map['size'] as String,
-    weight: map['weight'] as String,
-    materialType: map['materialType'] as String,
-    printing: map['printing'] as String,
+    size: map['size'] as String? ?? '',
+    weight: map['weight'] as String? ?? '',
+    materialType: map['materialType'] as String? ?? '',
+    printing: map['printing'] as String? ?? '',
   );
 
   const ImageItem({
@@ -85,6 +85,13 @@ class ImageItem extends Equatable {
 
   // Método para obter todas as URLs (incluindo a principal e variações)
   List<String> get allUrls => [url, ...variations];
+
+  bool get hasAnyDescription =>
+      (size?.isNotEmpty ?? false) ||
+      (weight?.isNotEmpty ?? false) ||
+      (materialType?.isNotEmpty ?? false) ||
+      (printing?.isNotEmpty ?? false) ||
+      isCollab;
 
   // Método para criar uma cópia com URL diferente (para troca de variação)
   ImageItem copyWithUrl(String newUrl) => ImageItem(

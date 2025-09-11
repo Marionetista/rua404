@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/blured_button.dart';
@@ -91,6 +92,52 @@ class SettingsPage extends StatelessWidget {
                   iconUrl: 'assets/icons/terms.png',
                   title: 'Termos e privacidade',
                 ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Divider(color: AppColors.halfWhite),
+                ),
+                Row(
+                  spacing: 16,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: FaIcon(
+                        FontAwesomeIcons.instagram,
+                        color: AppColors.ruaWhite,
+                        size: 32,
+                      ),
+                      onPressed: () {
+                        AppUtils.openExternalLink(
+                          'https://www.instagram.com/rua4.0.4/',
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: FaIcon(
+                        FontAwesomeIcons.tiktok,
+                        color: AppColors.ruaWhite,
+                        size: 32,
+                      ),
+                      onPressed: () {
+                        AppUtils.openExternalLink(
+                          'https://www.tiktok.com/@rua4.0.4',
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: FaIcon(
+                        FontAwesomeIcons.behance,
+                        color: AppColors.ruaWhite,
+                        size: 28,
+                      ),
+                      onPressed: () {
+                        AppUtils.openExternalLink(
+                          'https://www.behance.net/rua404',
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -132,6 +179,7 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
+
           Row(children: [BlurTextButton(text: 'Sair', onTap: () {})]),
         ],
       ),

@@ -43,9 +43,6 @@ class _FlyingCoverState extends State<FlyingCover>
   double _gyroZ = 0.0;
   bool _hasGyroscopeEffect = false;
 
-  // Variáveis para o efeito holográfico
-  late Animation<double> _holographicAnimation;
-
   @override
   void initState() {
     super.initState();
