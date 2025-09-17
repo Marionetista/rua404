@@ -13,8 +13,11 @@ final List<ImageItem> staggeredImagePool = [
     height: 150.0,
     types: [FilterType.classicos, FilterType.stickers, FilterType.prints],
     title: 'Doggie Collection',
-    description: 'Uma coleção incrível de designs com cachorros',
+    description: 'Uma coleção incrível do nosso mais antigo personagem',
     variations: ['assets/images/doggie.png', 'assets/images/doggieRosa.png'],
+    hasARFilter: true,
+    marketable: true,
+    size: '9x6',
   ),
   const ImageItem(
     url: 'assets/images/gato.jpg',

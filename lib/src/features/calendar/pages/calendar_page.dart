@@ -144,6 +144,7 @@ class _CalendarPageState extends State<CalendarPage> {
                         subtitle: '16 de Novembro de 2024, Uberlândia',
                         imagePath: 'assets/images/festival.jpg',
                         isFutureEvent: false,
+                        // https://www.sympla.com.br/evento/festival-de-colantes-3-edicao/2628004?referrer=www.google.com
                       ),
                 ),
               ),

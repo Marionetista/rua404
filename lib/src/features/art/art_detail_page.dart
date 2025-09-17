@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/colors/app_colors.dart';
 import '../../shared/cubits/image_variation_cubit.dart';
+import '../../shared/cubits/image_variation_state.dart';
 import '../../shared/enums/filter_type.dart';
 import '../../shared/models/image_item_model.dart';
 import '../../shared/widgets/circle_button.dart';
@@ -26,7 +27,7 @@ class ArtDetailPage extends StatelessWidget {
     } else if (types.contains(FilterType.stickers)) {
       return 'Sticker';
     }
-    return 'Print'; // Default
+    return 'Print';
   }
 
   Widget _buildSpecificationRow(String label, String value) => Row(
@@ -36,7 +37,7 @@ class ArtDetailPage extends StatelessWidget {
         label,
         style: TextStyle(
           color: AppColors.ruaWhite,
-          fontSize: 14,
+          fontSize: 14.0,
           fontWeight: FontWeight.w500,
         ),
       ),
@@ -161,7 +162,10 @@ class ArtDetailPage extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            const CircleFavoriteButton(isFavorited: true),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 8.0),
+                              child: CircleFavoriteButton(isFavorited: true),
+                            ),
                             if (currentImageItem.hasARFilter)
                               const CircleButton(icon: CircleButtonIcon.aircon),
                           ],

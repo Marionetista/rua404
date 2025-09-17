@@ -1,28 +1,7 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/image_item_model.dart';
-
-// Estados
-abstract class ImageVariationState extends Equatable {
-  const ImageVariationState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class ImageVariationInitial extends ImageVariationState {
-  const ImageVariationInitial();
-}
-
-class ImageVariationLoaded extends ImageVariationState {
-  const ImageVariationLoaded(this.imageItem);
-
-  final ImageItem imageItem;
-
-  @override
-  List<Object?> get props => [imageItem];
-}
+import 'image_variation_state.dart';
 
 // Cubit
 class ImageVariationCubit extends Cubit<ImageVariationState> {

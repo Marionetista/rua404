@@ -32,12 +32,21 @@ class _FlyingCoverState extends State<FlyingCover>
   late Animation<double> _rotationAnimation;
   late Animation<double> _scaleAnimation;
 
+  // Controller para animação suave do giroscópio
+  late AnimationController _gyroController;
+  late Animation<double> _gyroXAnimation;
+  late Animation<double> _gyroYAnimation;
+  late Animation<double> _gyroZAnimation;
+
   // Controle de pan (movimento suave)
   Offset _panOffset = Offset.zero;
   bool _hasFlownAway = false;
 
   // Variáveis para o efeito de giroscópio
   StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
+  double _targetGyroX = 0.0;
+  double _targetGyroY = 0.0;
+  double _targetGyroZ = 0.0;
   double _gyroX = 0.0;
   double _gyroY = 0.0;
   double _gyroZ = 0.0;
@@ -52,13 +61,42 @@ class _FlyingCoverState extends State<FlyingCover>
         widget.imageTypes.contains(FilterType.prints) ||
         widget.imageTypes.contains(FilterType.stickers);
 
-    // Verificar se a imagem é do tipo Holográfico
-
     // Controller para animação de voo
     _flyAwayController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
+
+    // Controller para animação suave do giroscópio
+    _gyroController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+
+    // Animações para suavizar os valores do giroscópio
+    _gyroXAnimation = Tween<double>(
+      begin: 0,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _gyroController, curve: Curves.easeOut));
+    _gyroYAnimation = Tween<double>(
+      begin: 0,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _gyroController, curve: Curves.easeOut));
+    _gyroZAnimation = Tween<double>(
+      begin: 0,
+      end: 0,
+    ).animate(CurvedAnimation(parent: _gyroController, curve: Curves.easeOut));
+
+    // Listener para atualizar os valores atuais do giroscópio
+    _gyroController.addListener(() {
+      if (mounted) {
+        setState(() {
+          _gyroX = _gyroXAnimation.value;
+          _gyroY = _gyroYAnimation.value;
+          _gyroZ = _gyroZAnimation.value;
+        });
+      }
+    });
 
     // Animação de voo
     _positionAnimation = Tween<Offset>(
@@ -187,16 +225,25 @@ class _FlyingCoverState extends State<FlyingCover>
 
   Widget _buildGyroscopeTransform() {
     // Calcular as transformações 3D baseadas no giroscópio
-    final double rotationX =
-        _gyroY * 0.1; // Rotação em X baseada no movimento Y
-    final double rotationY =
-        _gyroX * 0.1; // Rotação em Y baseada no movimento X
-    final double rotationZ =
-        _gyroZ * 0.05; // Rotação em Z baseada no movimento Z
+    // Movimento natural em TODAS as direções (360°)
 
-    // Calcular offset para efeito de paralaxe
-    final double offsetX = _gyroX * 20;
-    final double offsetY = _gyroY * 20;
+    // Rotações 3D para efeito de profundidade
+    final double rotationX = -_gyroY * 0.2; // Inclinação para frente/trás
+    final double rotationY =
+        _gyroX * 0.2; // Inclinação lateral esquerda/direita
+
+    // TOMBO controlado: combinar X e Y sem usar atan2
+    // Criar deadzone para evitar micro-movimentos
+    final double deadzone = 0.1;
+    double effectiveGyroX = _gyroX.abs() > deadzone ? _gyroX : 0.0;
+    double effectiveGyroY = _gyroY.abs() > deadzone ? _gyroY : 0.0;
+
+    // Tombo baseado na combinação dos eixos, mas limitado
+    final double rotationZ = (effectiveGyroX * 0.15) + (effectiveGyroY * 0.1);
+
+    // Calcular offset para efeito de paralaxe mais sutil
+    final double offsetX = effectiveGyroX * 6;
+    final double offsetY = -effectiveGyroY * 6;
 
     return Transform(
       alignment: Alignment.center,
@@ -237,13 +284,42 @@ class _FlyingCoverState extends State<FlyingCover>
     _gyroscopeSubscription = gyroscopeEventStream().listen((
       GyroscopeEvent event,
     ) {
-      if (mounted) {
-        setState(() {
-          // Suavizar os valores do giroscópio para um efeito mais natural
-          _gyroX = _gyroX * 0.8 + event.x * 0.2;
-          _gyroY = _gyroY * 0.8 + event.y * 0.2;
-          _gyroZ = _gyroZ * 0.8 + event.z * 0.2;
-        });
+      if (mounted && !_hasFlownAway) {
+        // Filtro mais leve para maior responsividade
+        _targetGyroX = _targetGyroX * 0.5 + event.x * 0.5;
+        _targetGyroY = _targetGyroY * 0.5 + event.y * 0.5;
+        _targetGyroZ = _targetGyroZ * 0.5 + event.z * 0.5;
+
+        // Limitar os valores para evitar movimentos muito extremos
+        _targetGyroX = _targetGyroX.clamp(-3.0, 3.0);
+        _targetGyroY = _targetGyroY.clamp(-3.0, 3.0);
+        _targetGyroZ = _targetGyroZ.clamp(-3.0, 3.0);
+
+        // Atualizar as animações com os novos valores target
+        _gyroXAnimation = Tween<double>(
+          begin: _gyroX,
+          end: _targetGyroX,
+        ).animate(
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+        );
+
+        _gyroYAnimation = Tween<double>(
+          begin: _gyroY,
+          end: _targetGyroY,
+        ).animate(
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+        );
+
+        _gyroZAnimation = Tween<double>(
+          begin: _gyroZ,
+          end: _targetGyroZ,
+        ).animate(
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+        );
+
+        // Resetar e iniciar a animação
+        _gyroController.reset();
+        _gyroController.forward();
       }
     });
   }
@@ -251,6 +327,7 @@ class _FlyingCoverState extends State<FlyingCover>
   @override
   void dispose() {
     _flyAwayController.dispose();
+    _gyroController.dispose();
     _gyroscopeSubscription?.cancel();
     super.dispose();
   }

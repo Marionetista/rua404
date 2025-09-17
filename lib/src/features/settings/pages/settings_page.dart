@@ -6,6 +6,7 @@ import '../../../shared/colors/app_colors.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../utils/app_utils.dart';
+import '../../notifications/notifications_page.dart';
 import '../widgets/tile_button_widget.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -80,9 +81,28 @@ class SettingsPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(color: AppColors.halfWhite),
                 ),
-                const TileButton(
-                  iconUrl: 'assets/icons/notificacao.png',
-                  title: 'Notificações',
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration: const Duration(milliseconds: 200),
+                        pageBuilder:
+                            (context, animation, secondaryAnimation) =>
+                                const NotificationsPage(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) =>
+                                FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                ),
+                      ),
+                    );
+                  },
+                  child: const TileButton(
+                    iconUrl: 'assets/icons/notificacao.png',
+                    title: 'Notificações',
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
