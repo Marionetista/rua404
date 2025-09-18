@@ -43,6 +43,16 @@ class BulletButton extends StatelessWidget {
               color: isSelected ? Colors.black : AppColors.ruaWhite,
               fontSize: 16,
               fontWeight: FontWeight.w600,
+              shadows:
+                  isSelected
+                      ? null
+                      : [
+                        Shadow(
+                          offset: const Offset(1, 2),
+                          blurRadius: 5,
+                          color: Colors.black.withValues(alpha: 0.3),
+                        ),
+                      ],
             ),
           ),
         ),

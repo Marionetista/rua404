@@ -69,7 +69,9 @@ class _FlyingCoverState extends State<FlyingCover>
 
     // Controller para animação suave do giroscópio
     _gyroController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(
+        milliseconds: 150,
+      ), // Equilibrio entre suavidade e responsividade
       vsync: this,
     );
 
@@ -227,8 +229,8 @@ class _FlyingCoverState extends State<FlyingCover>
     // Calcular as transformações 3D baseadas no giroscópio
     // Movimento natural em TODAS as direções (360°)
 
-    // Criar deadzone para evitar micro-movimentos
-    final double deadzone = 0.1;
+    // Deadzone menor para maior responsividade
+    final double deadzone = 0.05;
     double effectiveGyroX = _gyroX.abs() > deadzone ? _gyroX : 0.0;
     double effectiveGyroY = _gyroY.abs() > deadzone ? _gyroY : 0.0;
 
@@ -295,10 +297,10 @@ class _FlyingCoverState extends State<FlyingCover>
       GyroscopeEvent event,
     ) {
       if (mounted && !_hasFlownAway) {
-        // Filtro mais leve para maior responsividade
-        _targetGyroX = _targetGyroX * 0.5 + event.x * 0.5;
-        _targetGyroY = _targetGyroY * 0.5 + event.y * 0.5;
-        _targetGyroZ = _targetGyroZ * 0.5 + event.z * 0.5;
+        // Filtro equilibrado para suavidade sem travamentos
+        _targetGyroX = _targetGyroX * 0.6 + event.x * 0.4;
+        _targetGyroY = _targetGyroY * 0.6 + event.y * 0.4;
+        _targetGyroZ = _targetGyroZ * 0.6 + event.z * 0.4;
 
         // Limitar os valores para evitar movimentos muito extremos
         _targetGyroX = _targetGyroX.clamp(-3.0, 3.0);
@@ -310,21 +312,21 @@ class _FlyingCoverState extends State<FlyingCover>
           begin: _gyroX,
           end: _targetGyroX,
         ).animate(
-          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOut),
         );
 
         _gyroYAnimation = Tween<double>(
           begin: _gyroY,
           end: _targetGyroY,
         ).animate(
-          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOut),
         );
 
         _gyroZAnimation = Tween<double>(
           begin: _gyroZ,
           end: _targetGyroZ,
         ).animate(
-          CurvedAnimation(parent: _gyroController, curve: Curves.easeOutCubic),
+          CurvedAnimation(parent: _gyroController, curve: Curves.easeOut),
         );
 
         // Resetar e iniciar a animação
