@@ -227,19 +227,29 @@ class _FlyingCoverState extends State<FlyingCover>
     // Calcular as transformações 3D baseadas no giroscópio
     // Movimento natural em TODAS as direções (360°)
 
-    // Rotações 3D para efeito de profundidade
-    final double rotationX = -_gyroY * 0.2; // Inclinação para frente/trás
-    final double rotationY =
-        _gyroX * 0.2; // Inclinação lateral esquerda/direita
-
-    // TOMBO controlado: combinar X e Y sem usar atan2
     // Criar deadzone para evitar micro-movimentos
     final double deadzone = 0.1;
     double effectiveGyroX = _gyroX.abs() > deadzone ? _gyroX : 0.0;
     double effectiveGyroY = _gyroY.abs() > deadzone ? _gyroY : 0.0;
 
-    // Tombo baseado na combinação dos eixos, mas limitado
-    final double rotationZ = (effectiveGyroX * 0.15) + (effectiveGyroY * 0.1);
+    // Movimento ORTOGONAL 3D - inclinação natural sem efeito pêndulo
+    // Determinar qual movimento é dominante (ortogonal)
+    final double absX = effectiveGyroX.abs();
+    final double absY = effectiveGyroY.abs();
+
+    double rotationX = 0.0;
+    double rotationY = 0.0;
+    final double rotationZ = 0.0; // Não usar Z para evitar efeito pêndulo
+
+    if (absX > absY) {
+      // Movimento LATERAL dominante (esquerda/direita)
+      // Inclina para direita → rotationX positivo (lado direito "afunda" em 3D)
+      rotationX = effectiveGyroX * 0.25;
+    } else if (absY > 0) {
+      // Movimento VERTICAL dominante (cima/baixo)
+      // Inclina para cima → rotationY negativo (parte de baixo "sobe" em 3D)
+      rotationY = -effectiveGyroY * 0.25;
+    }
 
     // Calcular offset para efeito de paralaxe mais sutil
     final double offsetX = effectiveGyroX * 6;
