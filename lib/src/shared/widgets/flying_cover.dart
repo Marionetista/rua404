@@ -41,6 +41,7 @@ class _FlyingCoverState extends State<FlyingCover>
   // Controle de pan (movimento suave)
   Offset _panOffset = Offset.zero;
   bool _hasFlownAway = false;
+  Offset _flyDirection = const Offset(0, -3.0); // Direção padrão: para cima
 
   // Variáveis para o efeito de giroscópio
   StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
@@ -61,9 +62,11 @@ class _FlyingCoverState extends State<FlyingCover>
         widget.imageTypes.contains(FilterType.prints) ||
         widget.imageTypes.contains(FilterType.stickers);
 
-    // Controller para animação de voo
+    // Controller para animação de voo (mais rápido)
     _flyAwayController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(
+        milliseconds: 800,
+      ), // Mais rápido para fechar popup
       vsync: this,
     );
 
@@ -128,8 +131,54 @@ class _FlyingCoverState extends State<FlyingCover>
     }
   }
 
-  void _flyAway() {
+  void _flyAway([Offset? direction, double? gestureSpeed]) {
     if (_hasFlownAway) return;
+
+    // Parar giroscópio imediatamente
+    _gyroscopeSubscription?.cancel();
+    _gyroController.stop();
+
+    // Calcular velocidade e distância baseadas no gesto
+    double speed = gestureSpeed ?? 600.0; // Velocidade padrão
+
+    // Mapear velocidade para duração (mais rápido = menos tempo)
+    // Velocidade mín: 500px/s = 1200ms, Velocidade máx: 3000px/s = 400ms
+    double duration = (1600 - (speed - 500) * 0.4).clamp(400.0, 1200.0);
+
+    // Mapear velocidade para distância em pixels (mais rápido = mais longe)
+    double distanceInPixels = (speed * 0.8).clamp(400.0, 1200.0);
+
+    // Definir direção e distância do voo
+    if (direction != null) {
+      _flyDirection = Offset(
+        direction.dx * distanceInPixels,
+        direction.dy * distanceInPixels,
+      );
+    }
+
+    // Recriar o controller com nova duração
+    _flyAwayController.dispose();
+    _flyAwayController = AnimationController(
+      duration: Duration(milliseconds: duration.round()),
+      vsync: this,
+    );
+
+    // Recriar animações com nova direção e distância
+    // Começar da posição atual do pan, não do centro
+    _positionAnimation = Tween<Offset>(
+      begin: _panOffset, // Começar de onde a imagem foi arrastada
+      end: _panOffset + _flyDirection, // Voar a partir da posição atual
+    ).animate(
+      CurvedAnimation(parent: _flyAwayController, curve: Curves.easeOutCubic),
+    );
+
+    _rotationAnimation = Tween<double>(begin: 0, end: pi / 3).animate(
+      CurvedAnimation(parent: _flyAwayController, curve: Curves.easeOut),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.3).animate(
+      CurvedAnimation(parent: _flyAwayController, curve: Curves.easeOut),
+    );
 
     setState(() => _hasFlownAway = true);
     _flyAwayController.forward().whenComplete(() => widget.onTap());
@@ -144,18 +193,34 @@ class _FlyingCoverState extends State<FlyingCover>
 
     setState(() => _panOffset += details.delta);
 
-    // Se arrastou muito para cima, inicia o voo
-    if (_panOffset.dy < -100) {
-      _flyAway();
+    // Se arrastou muito em qualquer direção, inicia o voo
+    final distance = _panOffset.distance;
+    if (distance > 120) {
+      // Calcular direção baseada no offset acumulado
+      final normalizedOffset = _panOffset / distance;
+      final flyDirection = Offset(normalizedOffset.dx, normalizedOffset.dy);
+
+      // Estimar velocidade baseada na distância (movimento longo = velocidade média)
+      double estimatedSpeed = (distance * 8).clamp(500.0, 2000.0);
+
+      _flyAway(flyDirection, estimatedSpeed);
     }
   }
 
   void _handlePanEnd(DragEndDetails details) {
     if (_hasFlownAway) return;
 
-    // Se a velocidade for alta para cima, inicia o voo
-    if (details.velocity.pixelsPerSecond.dy < -500) {
-      _flyAway();
+    final velocity = details.velocity.pixelsPerSecond;
+    final speed = velocity.distance;
+
+    // Se a velocidade for alta em qualquer direção, inicia o voo
+    if (speed > 500) {
+      // Calcular direção do voo baseada na velocidade
+      final normalizedVelocity = velocity / speed;
+      final flyDirection = Offset(normalizedVelocity.dx, normalizedVelocity.dy);
+
+      // Usar a velocidade real do gesto
+      _flyAway(flyDirection, speed);
     } else {
       // Retorna para a posição original com animação suave
       setState(() => _panOffset = Offset.zero);
@@ -170,7 +235,8 @@ class _FlyingCoverState extends State<FlyingCover>
         builder:
             (context, child) => Transform.translate(
               offset:
-                  _positionAnimation.value * MediaQuery.of(context).size.height,
+                  _positionAnimation
+                      .value, // Usar valor direto, já está em pixels
               child: Transform.rotate(
                 angle: _rotationAnimation.value,
                 child: Transform.scale(
@@ -230,7 +296,7 @@ class _FlyingCoverState extends State<FlyingCover>
     // Movimento natural em TODAS as direções (360°)
 
     // Deadzone menor para maior responsividade
-    final double deadzone = 0.05;
+    const double deadzone = 0.05;
     double effectiveGyroX = _gyroX.abs() > deadzone ? _gyroX : 0.0;
     double effectiveGyroY = _gyroY.abs() > deadzone ? _gyroY : 0.0;
 
@@ -241,7 +307,7 @@ class _FlyingCoverState extends State<FlyingCover>
 
     double rotationX = 0.0;
     double rotationY = 0.0;
-    final double rotationZ = 0.0; // Não usar Z para evitar efeito pêndulo
+    const double rotationZ = 0.0; // Não usar Z para evitar efeito pêndulo
 
     if (absX > absY) {
       // Movimento LATERAL dominante (esquerda/direita)
