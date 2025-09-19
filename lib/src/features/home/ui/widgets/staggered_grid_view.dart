@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../../shared/enums/filter_type.dart';
-import '../../../shared/models/image_item_model.dart';
-import '../../../shared/widgets/image_popup.dart';
+import '../../../../shared/enums/filter_type.dart';
+import '../../../../shared/models/image_item_model.dart';
+import '../../../../shared/widgets/image_popup.dart';
 
 // Pool de imagens para o staggered grid
 final List<ImageItem> staggeredImagePool = [

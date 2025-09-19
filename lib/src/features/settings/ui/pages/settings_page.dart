@@ -2,11 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/widgets/blured_button.dart';
-import '../../../shared/widgets/circle_button.dart';
-import '../../../utils/app_utils.dart';
-import '../../notifications/notifications_page.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/widgets/blured_button.dart';
+import '../../../../shared/widgets/circle_button.dart';
+import '../../../../utils/app_utils.dart';
+import '../../../notifications/ui/notifications_page.dart';
 import '../widgets/tile_button_widget.dart';
 
 class SettingsPage extends StatelessWidget {

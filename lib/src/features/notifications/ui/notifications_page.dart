@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../../shared/colors/app_colors.dart';
-import '../../shared/widgets/circle_button.dart';
+import '../../../shared/colors/app_colors.dart';
+import '../../../shared/widgets/circle_button.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});

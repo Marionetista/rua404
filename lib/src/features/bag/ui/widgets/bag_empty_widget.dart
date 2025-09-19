@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../shared/colors/app_colors.dart';
+import '../../../../shared/colors/app_colors.dart';
 
 class BagEmptyWidget extends StatelessWidget {
   const BagEmptyWidget({super.key});

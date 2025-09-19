@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/enums/filter_type.dart';
-import '../../../shared/widgets/blured_button.dart';
-import '../../../shared/widgets/circle_button.dart';
-import '../../../shared/widgets/flying_cover.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/enums/filter_type.dart';
+import '../../../../shared/widgets/blured_button.dart';
+import '../../../../shared/widgets/circle_button.dart';
+import '../../../../shared/widgets/flying_cover.dart';
 
 class InfiniteCanvas extends StatefulWidget {
   const InfiniteCanvas({super.key});

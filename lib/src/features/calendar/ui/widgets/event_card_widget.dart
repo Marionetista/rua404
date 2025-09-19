@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../shared/colors/app_colors.dart';
+import '../../../../shared/colors/app_colors.dart';
 
 class EventCardWidget extends StatelessWidget {
   const EventCardWidget({

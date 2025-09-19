@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/models/image_item_model.dart';
-import '../../../utils/app_utils.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/models/image_item_model.dart';
+import '../../../../utils/app_utils.dart';
 
 class BagCardWidget extends StatefulWidget {
   const BagCardWidget({required this.product, super.key});

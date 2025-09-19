@@ -1,29 +1,13 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'src/features/home/pages/home_page.dart';
+import 'app.dart';
+import 'app_bloc_observer.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  EquatableConfig.stringify = true;
+  Bloc.observer = AppBlocObserver();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) => MaterialApp(
-    title: 'RuA404',
-    theme: ThemeData(visualDensity: VisualDensity.adaptivePlatformDensity),
-    home: const MyHomePage(),
-    debugShowCheckedModeBanner: false,
-  );
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) => const HomePage();
+  runApp(const App());
 }

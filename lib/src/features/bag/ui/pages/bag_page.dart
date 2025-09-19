@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/enums/filter_type.dart';
-import '../../../shared/models/image_item_model.dart';
-import '../../../shared/widgets/blured_button.dart';
-import '../../../shared/widgets/circle_button.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/enums/filter_type.dart';
+import '../../../../shared/models/image_item_model.dart';
+import '../../../../shared/widgets/blured_button.dart';
+import '../../../../shared/widgets/circle_button.dart';
 import '../widgets/bag_card_widget.dart';
 import '../widgets/bag_empty_widget.dart';
 

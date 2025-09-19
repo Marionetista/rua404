@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/enums/filter_type.dart';
-import '../../../shared/widgets/blured_button.dart';
-import '../../../shared/widgets/circle_button.dart';
-import '../../search/search_page.dart';
-import '../../settings/pages/settings_page.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/enums/filter_type.dart';
+import '../../../../shared/widgets/blured_button.dart';
+import '../../../../shared/widgets/circle_button.dart';
+import '../../../search/ui/search_page.dart';
+import '../../../settings/ui/pages/settings_page.dart';
 import 'bullet_button_widget.dart';
 
 class CustomBottomNavBar extends StatefulWidget {

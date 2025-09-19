@@ -2,12 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../shared/colors/app_colors.dart';
-import '../../shared/cubits/image_variation/image_variation_cubit.dart';
-import '../../shared/models/image_item_model.dart';
-import '../../shared/widgets/circle_button.dart';
-import '../art/art_detail_page.dart';
-import '../home/widgets/staggered_grid_view_widget.dart';
+import '../../../shared/colors/app_colors.dart';
+import '../../../shared/cubits/image_variation/image_variation_cubit.dart';
+import '../../../shared/models/image_item_model.dart';
+import '../../../shared/widgets/circle_button.dart';
+import '../../art/ui/art_detail_page.dart';
+import '../../home/ui/widgets/staggered_grid_view_widget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

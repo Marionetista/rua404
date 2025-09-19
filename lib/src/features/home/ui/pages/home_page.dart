@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/colors/app_colors.dart';
-import '../../../shared/enums/filter_type.dart';
-import '../../../shared/widgets/circle_button.dart';
-import '../../bag/pages/bag_page.dart';
-import '../../calendar/pages/calendar_page.dart';
+import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/enums/filter_type.dart';
+import '../../../../shared/widgets/circle_button.dart';
+import '../../../bag/ui/pages/bag_page.dart';
+import '../../../calendar/ui/pages/calendar_page.dart';
 import '../widgets/rua_bottom_bar.dart';
 import '../widgets/staggered_grid_view.dart';
 
