@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../shared/colors/app_colors.dart';
+import '../../../shared/enums/filter_type.dart';
+import '../../../shared/models/image_item_model.dart';
 import '../../../shared/widgets/blured_button.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../widgets/bag_card_widget.dart';
@@ -53,17 +55,42 @@ class _BagPageState extends State<BagPage> {
                 slivers: [
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 10.0,
-                      ),
-                      child: Text(
-                        'Sua sacola (2)',
-                        style: TextStyle(
-                          color: AppColors.ruaWhite,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        spacing: 10.0,
+                        children: [
+                          Text(
+                            'Sua sacola (2)',
+                            style: TextStyle(
+                              color: AppColors.ruaWhite,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          InkWell(
+                            onTap: () {},
+                            child: Row(
+                              spacing: 10.0,
+                              children: [
+                                Text(
+                                  'Limpar',
+                                  style: TextStyle(
+                                    color: AppColors.ruaWhite,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                Image.asset(
+                                  'assets/icons/trash.png',
+                                  width: 24,
+                                  height: 24,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -74,7 +101,7 @@ class _BagPageState extends State<BagPage> {
                       vertical: 10.0,
                     ),
                     sliver: SliverList.separated(
-                      itemCount: 1,
+                      itemCount: 3,
                       separatorBuilder:
                           (_, __) => const Divider(
                             color: Colors.white24,
@@ -82,10 +109,20 @@ class _BagPageState extends State<BagPage> {
                           ),
                       itemBuilder:
                           (_, index) => const BagCardWidget(
-                            title: 'RuA 404 + Caxin',
-                            subtitle: 'Poster',
-                            price: 'R\$ 220,00',
-                            imagePath: 'assets/images/caxinCollab.png',
+                            product: ImageItem(
+                              url: 'assets/images/pimp.png',
+                              width: 220.0,
+                              height: 180.0,
+                              types: [
+                                FilterType.classicos,
+                                FilterType.prints,
+                                FilterType.stickers,
+                              ],
+                              title: 'Pimp Classic',
+                              description: 'Design clássico atemporal',
+                              variations: ['assets/images/pimp.png'],
+                              price: 20.0,
+                            ),
                           ),
                     ),
                   ),

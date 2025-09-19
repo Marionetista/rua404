@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../colors/app_colors.dart';
-import '../cubits/image_variation.dart';
+import '../cubits/image_variation/image_variation.dart';
 
 class VariationSelectionWidget extends StatelessWidget {
   const VariationSelectionWidget({super.key});

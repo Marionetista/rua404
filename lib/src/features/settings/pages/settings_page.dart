@@ -57,60 +57,85 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const TileButton(
+                TileButton(
                   iconUrl: 'assets/icons/etprofile.png',
                   title: 'Perfil',
+                  onTap: () {},
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(color: AppColors.halfWhite),
                 ),
-                const TileButton(
+                TileButton(
                   iconUrl: 'assets/icons/pedidos.png',
                   title: 'Pedidos',
+                  onTap: () {},
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(color: AppColors.halfWhite),
                 ),
-                const TileButton(
+                TileButton(
                   iconUrl: 'assets/icons/pagamentos.png',
                   title: 'Meios de pagamento',
+                  onTap: () {},
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(color: AppColors.halfWhite),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      PageRouteBuilder(
-                        opaque: false,
-                        transitionDuration: const Duration(milliseconds: 200),
-                        pageBuilder:
-                            (context, animation, secondaryAnimation) =>
-                                const NotificationsPage(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) =>
-                                FadeTransition(
+                  onTap:
+                      () => Navigator.of(context).push(
+                        PageRouteBuilder(
+                          opaque: false,
+                          transitionDuration: const Duration(milliseconds: 200),
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  const NotificationsPage(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) =>
+                                  FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  ),
+                        ),
+                      ),
+                  child: TileButton(
+                    iconUrl: 'assets/icons/notificacao.png',
+                    title: 'Notificações',
+                    onTap:
+                        () => Navigator.of(context).push(
+                          PageRouteBuilder(
+                            opaque: false,
+                            transitionDuration: const Duration(
+                              milliseconds: 200,
+                            ),
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const NotificationsPage(),
+                            transitionsBuilder:
+                                (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child,
+                                ) => FadeTransition(
                                   opacity: animation,
                                   child: child,
                                 ),
-                      ),
-                    );
-                  },
-                  child: const TileButton(
-                    iconUrl: 'assets/icons/notificacao.png',
-                    title: 'Notificações',
+                          ),
+                        ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Divider(color: AppColors.halfWhite),
                 ),
-                const TileButton(
+                TileButton(
                   iconUrl: 'assets/icons/terms.png',
                   title: 'Termos e privacidade',
+                  onTap: () {},
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),

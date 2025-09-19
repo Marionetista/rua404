@@ -18,6 +18,7 @@ final List<ImageItem> staggeredImagePool = [
     hasARFilter: true,
     marketable: true,
     size: '9x6',
+    price: 4.50,
   ),
   const ImageItem(
     url: 'assets/images/gato.jpg',
@@ -27,6 +28,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Gato Collab',
     description: 'Colaboração especial com artistas locais',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/caxinCollab.png',
@@ -36,6 +38,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Caxin Collab',
     description: 'Projeto colaborativo exclusivo',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/pimp.png',
@@ -45,6 +48,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Pimp Classic',
     description: 'Design clássico atemporal',
     variations: ['assets/images/pimp.png'],
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/festival.jpg',
@@ -54,6 +58,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Festival Print',
     description: 'Arte para impressão em alta qualidade',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/fakepng.png',
@@ -62,6 +67,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.stickers, FilterType.novos],
     title: 'Fake Sticker',
     description: 'Adesivo exclusivo da coleção',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/noidRuaDoggie.jpg',
@@ -70,6 +76,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.novos, FilterType.classicos],
     title: 'No ID Rua Doggie',
     description: 'Novo design da série Rua',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/doggie.png',
@@ -78,6 +85,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.prints, FilterType.stickers],
     title: 'Doggie Print',
     description: 'Versão para impressão do Doggie',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/gato.jpg',
@@ -86,6 +94,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.classicos, FilterType.prints],
     title: 'Gato Classic',
     description: 'Versão clássica do Gato',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/caxinCollab.png',
@@ -95,6 +104,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Caxin Sticker',
     description: 'Adesivo da colaboração Caxin',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/pimp.png',
@@ -104,6 +114,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Pimp New',
     description: 'Nova versão do Pimp',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/festival.jpg',
@@ -112,6 +123,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.stickers, FilterType.novos],
     title: 'Festival Sticker',
     description: 'Adesivo do Festival',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/fakepng.png',
@@ -120,6 +132,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.prints, FilterType.classicos],
     title: 'Fake Print',
     description: 'Versão para impressão do Fake',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/noidRuaDoggie.jpg',
@@ -129,6 +142,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'No ID Collab',
     description: 'Colaboração No ID',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/doggie.png',
@@ -137,6 +151,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.novos, FilterType.prints],
     title: 'Doggie New',
     description: 'Nova versão do Doggie',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/gato.jpg',
@@ -146,6 +161,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Gato Sticker',
     description: 'Adesivo do Gato',
     isCollab: true,
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/caxinCollab.png',
@@ -154,6 +170,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.prints, FilterType.novos],
     title: 'Caxin Print',
     description: 'Versão para impressão do Caxin',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/pimp.png',
@@ -162,6 +179,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.stickers, FilterType.classicos],
     title: 'Pimp Sticker',
     description: 'Adesivo do Pimp',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/festival.jpg',
@@ -170,6 +188,7 @@ final List<ImageItem> staggeredImagePool = [
     types: [FilterType.novos, FilterType.prints],
     title: 'Festival New',
     description: 'Nova versão do Festival',
+    price: 20.0,
   ),
   const ImageItem(
     url: 'assets/images/fakepng.png',
@@ -179,6 +198,7 @@ final List<ImageItem> staggeredImagePool = [
     title: 'Fake Collab',
     description: 'Colaboração Fake',
     isCollab: true,
+    price: 20.0,
   ),
 ];
 

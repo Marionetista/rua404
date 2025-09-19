@@ -22,6 +22,7 @@ class ImageItem extends Equatable {
     weight: map['weight'] as String? ?? '',
     materialType: map['materialType'] as String? ?? '',
     printing: map['printing'] as String? ?? '',
+    price: (map['price'] as num).toDouble(),
   );
 
   const ImageItem({
@@ -31,6 +32,7 @@ class ImageItem extends Equatable {
     required this.types,
     required this.title,
     required this.description,
+    required this.price,
     this.variations = const [],
     this.isCollab = false,
     this.marketable = true,
@@ -55,6 +57,7 @@ class ImageItem extends Equatable {
   final String? weight;
   final String? materialType;
   final String? printing;
+  final double price;
 
   // Método para converter para Map (compatibilidade com código existente)
   Map<String, dynamic> toMap() => {
@@ -93,6 +96,19 @@ class ImageItem extends Equatable {
       (printing?.isNotEmpty ?? false) ||
       isCollab;
 
+  String getImageTypeText(ImageItem imageItem) {
+    final types = imageItem.types;
+    if (types.contains(FilterType.prints) &&
+        types.contains(FilterType.stickers)) {
+      return 'Print & Sticker';
+    } else if (types.contains(FilterType.prints)) {
+      return 'Print';
+    } else if (types.contains(FilterType.stickers)) {
+      return 'Sticker';
+    }
+    return 'Print';
+  }
+
   // Método para criar uma cópia com URL diferente (para troca de variação)
   ImageItem copyWithUrl(String newUrl) => ImageItem(
     url: newUrl,
@@ -109,6 +125,7 @@ class ImageItem extends Equatable {
     weight: weight,
     materialType: materialType,
     printing: printing,
+    price: price,
   );
 
   @override
@@ -127,5 +144,6 @@ class ImageItem extends Equatable {
     weight,
     materialType,
     printing,
+    price,
   ];
 }

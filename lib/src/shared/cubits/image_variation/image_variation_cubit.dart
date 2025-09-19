@@ -1,9 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/image_item_model.dart';
+import '../../models/image_item_model.dart';
 import 'image_variation_state.dart';
 
-// Cubit
 class ImageVariationCubit extends Cubit<ImageVariationState> {
   ImageVariationCubit() : super(const ImageVariationInitial());
 

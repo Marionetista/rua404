@@ -100,6 +100,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                 spacing: 10,
                 children: [
                   const CircleButton(icon: CircleButtonIcon.aircon),
+
                   CircleButton(
                     icon: CircleButtonIcon.profile,
                     onTap:

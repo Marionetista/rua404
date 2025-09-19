@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../models/image_item_model.dart';
+import '../../models/image_item_model.dart';
 
 abstract class ImageVariationState extends Equatable {
   const ImageVariationState();

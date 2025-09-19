@@ -22,10 +22,8 @@ class BlurTextButton extends StatelessWidget {
     child: BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
       child: InkWell(
-        onTap: () {
-          HapticFeedback.mediumImpact();
-          onTap?.call();
-        },
+        onTap:
+            () => HapticFeedback.mediumImpact().then((value) => onTap?.call()),
         borderRadius: BorderRadius.circular(48),
         highlightColor: Colors.transparent,
         child: Container(

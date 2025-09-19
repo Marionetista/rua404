@@ -4,6 +4,7 @@ enum FilterType {
   collabs('Collabs'),
   classicos('Clássicos'),
   prints('Prints'),
+  // quadrinhos('Quadrinhos'),
   stickers('Stickers');
 
   const FilterType(this.label);

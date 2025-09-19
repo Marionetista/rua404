@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/art/art_detail_page.dart';
 import '../colors/app_colors.dart';
-import '../cubits/image_variation.dart';
+import '../cubits/image_variation/image_variation.dart';
 import '../enums/filter_type.dart';
 import '../models/image_item_model.dart';
 import 'blured_button.dart';

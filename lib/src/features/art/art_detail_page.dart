@@ -5,9 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../shared/colors/app_colors.dart';
-import '../../shared/cubits/image_variation_cubit.dart';
-import '../../shared/cubits/image_variation_state.dart';
-import '../../shared/enums/filter_type.dart';
+import '../../shared/cubits/image_variation/image_variation_cubit.dart';
+import '../../shared/cubits/image_variation/image_variation_state.dart';
 import '../../shared/models/image_item_model.dart';
 import '../../shared/widgets/circle_button.dart';
 import '../../shared/widgets/variation_selection_widget.dart';
@@ -16,19 +15,6 @@ class ArtDetailPage extends StatelessWidget {
   const ArtDetailPage({required this.imageItem, super.key});
 
   final ImageItem imageItem;
-
-  String _getImageTypeText(ImageItem imageItem) {
-    final types = imageItem.types;
-    if (types.contains(FilterType.prints) &&
-        types.contains(FilterType.stickers)) {
-      return 'Print & Sticker';
-    } else if (types.contains(FilterType.prints)) {
-      return 'Print';
-    } else if (types.contains(FilterType.stickers)) {
-      return 'Sticker';
-    }
-    return 'Print';
-  }
 
   Widget _buildSpecificationRow(String label, String value) => Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -152,7 +138,9 @@ class ArtDetailPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              _getImageTypeText(currentImageItem),
+                              currentImageItem.getImageTypeText(
+                                currentImageItem,
+                              ),
                               style: TextStyle(
                                 color: AppColors.greyText,
                                 fontSize: 14,
