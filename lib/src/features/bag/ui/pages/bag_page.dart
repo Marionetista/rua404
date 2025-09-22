@@ -162,12 +162,17 @@ class _BagPageState extends State<BagPage> {
 
                 const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [BlurTextButton(text: 'Adicionar mais itens')],
+                      children: [
+                        BlurTextButton(
+                          text: 'Adicionar mais itens',
+                          onTap: () => Navigator.of(context).pop(),
+                        ),
+                      ],
                     ),
                   ),
                 ),

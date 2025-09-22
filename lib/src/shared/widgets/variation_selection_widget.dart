@@ -33,8 +33,9 @@ class VariationSelectionWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
+
               SizedBox(
-                height: 60,
+                height: 90,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: currentImageItem.variations.length,
@@ -47,49 +48,72 @@ class VariationSelectionWidget extends StatelessWidget {
                           () => context
                               .read<ImageVariationCubit>()
                               .selectVariation(index),
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        margin: const EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color:
-                                isSelected
-                                    ? AppColors.ruaWhite
-                                    : Colors.grey.withValues(alpha: 0.3),
-                            width: isSelected ? 2 : 1,
-                          ),
-                          boxShadow:
-                              isSelected
-                                  ? [
-                                    BoxShadow(
-                                      color: AppColors.ruaWhite.withValues(
-                                        alpha: 0.3,
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            margin: const EdgeInsets.only(left: 6, right: 6),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color:
+                                    isSelected
+                                        ? AppColors.ruaWhite
+                                        : Colors.grey.withValues(alpha: 0.3),
+                                width: isSelected ? 2 : 1,
+                              ),
+                              boxShadow:
+                                  isSelected
+                                      ? [
+                                        BoxShadow(
+                                          color: AppColors.ruaWhite.withValues(
+                                            alpha: 0.3,
+                                          ),
+                                          blurRadius: 8,
+                                          spreadRadius: 2,
+                                        ),
+                                      ]
+                                      : null,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(7),
+                              child: Image.asset(
+                                variation.url,
+                                fit: BoxFit.cover,
+                                errorBuilder:
+                                    (context, error, stackTrace) => Container(
+                                      color: Colors.grey[300],
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.error,
+                                          color: Colors.grey,
+                                        ),
                                       ),
-                                      blurRadius: 8,
-                                      spreadRadius: 2,
                                     ),
-                                  ]
-                                  : null,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(7),
-                          child: Image.asset(
-                            variation.url,
-                            fit: BoxFit.cover,
-                            errorBuilder:
-                                (context, error, stackTrace) => Container(
-                                  color: Colors.grey[300],
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.error,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 8),
+
+                          Text(
+                            variation.getImageTypeText(variation),
+                            style: TextStyle(
+                              color:
+                                  isSelected
+                                      ? AppColors.ruaWhite
+                                      : AppColors.greyText,
+                              fontSize: 10,
+                              fontWeight:
+                                  isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.normal,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     );
                   },

@@ -95,7 +95,7 @@ class ArtDetailPage extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.asset(
-                          currentImageItem.url,
+                          selectedVariation.url,
                           width: currentImageItem.width,
                           height: currentImageItem.height,
                           fit: BoxFit.cover,
