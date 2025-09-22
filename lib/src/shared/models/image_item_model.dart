@@ -13,7 +13,12 @@ class ImageItem extends Equatable {
     description: map['description'] as String? ?? 'Descrição não disponível',
     variations:
         map['variations'] != null
-            ? List<String>.from(map['variations'] as List)
+            ? (map['variations'] as List)
+                .map(
+                  (variation) =>
+                      ImageItem.fromMap(variation as Map<String, dynamic>),
+                )
+                .toList()
             : const [],
     isCollab: map['collab'] as bool? ?? false,
     marketable: map['marketable'] as bool? ?? true,
@@ -49,7 +54,7 @@ class ImageItem extends Equatable {
   final List<FilterType> types;
   final String title;
   final String description;
-  final List<String> variations;
+  final List<ImageItem> variations;
   final bool isCollab;
   final bool marketable;
   final bool hasARFilter;
@@ -67,7 +72,7 @@ class ImageItem extends Equatable {
     'types': types,
     'title': title,
     'description': description,
-    'variations': variations,
+    'variations': variations.map((v) => v.toMap()).toList(),
     'collab': isCollab,
     'marketable': marketable,
     'hasARFilter': hasARFilter,
@@ -87,7 +92,7 @@ class ImageItem extends Equatable {
   bool get isMarketable => marketable; //&& qtDisponível > 0
 
   // Método para obter todas as URLs (incluindo a principal e variações)
-  List<String> get allUrls => [url, ...variations];
+  List<String> get allUrls => [url, ...variations.map((v) => v.url)];
 
   bool get hasAnyDescription =>
       (size?.isNotEmpty ?? false) ||
@@ -98,10 +103,7 @@ class ImageItem extends Equatable {
 
   String getImageTypeText(ImageItem imageItem) {
     final types = imageItem.types;
-    if (types.contains(FilterType.prints) &&
-        types.contains(FilterType.stickers)) {
-      return 'Print & Sticker';
-    } else if (types.contains(FilterType.prints)) {
+    if (types.contains(FilterType.prints)) {
       return 'Print';
     } else if (types.contains(FilterType.stickers)) {
       return 'Sticker';

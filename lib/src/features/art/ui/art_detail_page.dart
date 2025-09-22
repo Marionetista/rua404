@@ -47,6 +47,9 @@ class ArtDetailPage extends StatelessWidget {
       }
 
       final currentImageItem = state.imageItem;
+      final selectedVariation =
+          context.read<ImageVariationCubit>().selectedVariation ??
+          currentImageItem;
 
       return Scaffold(
         backgroundColor: Colors.black,
@@ -132,7 +135,7 @@ class ArtDetailPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              currentImageItem.title,
+                              selectedVariation.title,
                               style: TextStyle(
                                 color: AppColors.ruaWhite,
                                 fontSize: 18,
@@ -141,8 +144,8 @@ class ArtDetailPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              currentImageItem.getImageTypeText(
-                                currentImageItem,
+                              selectedVariation.getImageTypeText(
+                                selectedVariation,
                               ),
                               style: TextStyle(
                                 color: AppColors.greyText,
@@ -183,7 +186,7 @@ class ArtDetailPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      currentImageItem.description,
+                      selectedVariation.description,
                       style: TextStyle(
                         color: AppColors.greyText,
                         fontSize: 14,
@@ -204,10 +207,10 @@ class ArtDetailPage extends StatelessWidget {
                     const SizedBox(height: 10),
 
                     // Tabela de especificações do produto
-                    currentImageItem.hasAnyDescription
+                    selectedVariation.hasAnyDescription
                         ? Column(
                           children: [
-                            if ((currentImageItem.size ?? '').isNotEmpty) ...[
+                            if ((selectedVariation.size ?? '').isNotEmpty) ...[
                               _buildSpecificationRow(
                                 'Tamanho',
                                 'Papel A3 (297 mm x 420 mm)',
@@ -215,12 +218,13 @@ class ArtDetailPage extends StatelessWidget {
                               const Divider(color: Colors.grey, height: 20),
                             ],
 
-                            if ((currentImageItem.weight ?? '').isNotEmpty) ...[
+                            if ((selectedVariation.weight ?? '')
+                                .isNotEmpty) ...[
                               _buildSpecificationRow('Peso', '261g'),
                               const Divider(color: Colors.grey, height: 20),
                             ],
 
-                            if ((currentImageItem.materialType ?? '')
+                            if ((selectedVariation.materialType ?? '')
                                 .isNotEmpty) ...[
                               _buildSpecificationRow(
                                 'Material',
@@ -229,7 +233,7 @@ class ArtDetailPage extends StatelessWidget {
                               const Divider(color: Colors.grey, height: 20),
                             ],
 
-                            if ((currentImageItem.printing ?? '')
+                            if ((selectedVariation.printing ?? '')
                                 .isNotEmpty) ...[
                               _buildSpecificationRow(
                                 'Impressão',
@@ -238,7 +242,7 @@ class ArtDetailPage extends StatelessWidget {
                               const Divider(color: Colors.grey, height: 20),
                             ],
 
-                            if (currentImageItem.isCollab)
+                            if (selectedVariation.isCollab)
                               _buildSpecificationRow('Collab', '@caxin'),
                           ],
                         )
@@ -262,7 +266,7 @@ class ArtDetailPage extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Visibility(
-          visible: currentImageItem.isMarketable,
+          visible: selectedVariation.isMarketable,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 0),
             child: ClipRRect(
@@ -315,8 +319,8 @@ class ArtDetailPage extends StatelessWidget {
                                   HapticFeedback.mediumImpact();
                                   // Adiciona o produto à sacola com a variação atual
                                   context.read<BagCubit>().addItem(
-                                    currentImageItem,
-                                    currentImageItem.url,
+                                    selectedVariation,
+                                    selectedVariation.url,
                                   );
                                 },
                                 borderRadius: BorderRadius.circular(48),

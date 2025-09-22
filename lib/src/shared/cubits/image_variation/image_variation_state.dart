@@ -14,10 +14,11 @@ class ImageVariationInitial extends ImageVariationState {
 }
 
 class ImageVariationLoaded extends ImageVariationState {
-  const ImageVariationLoaded(this.imageItem);
+  const ImageVariationLoaded(this.imageItem, this.selectedVariationIndex);
 
   final ImageItem imageItem;
+  final int selectedVariationIndex;
 
   @override
-  List<Object?> get props => [imageItem];
+  List<Object?> get props => [imageItem, selectedVariationIndex];
 }

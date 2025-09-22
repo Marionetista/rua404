@@ -6,7 +6,6 @@ import '../../features/art/ui/art_detail_page.dart';
 import '../../features/bag/logic/bag_cubit.dart';
 import '../colors/app_colors.dart';
 import '../cubits/image_variation/image_variation.dart';
-import '../enums/filter_type.dart';
 import '../models/image_item_model.dart';
 import 'blured_button.dart';
 import 'circle_button.dart';
@@ -86,19 +85,6 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  String _getImageTypeText(ImageItem imageItem) {
-    final types = imageItem.types;
-    if (types.contains(FilterType.prints) &&
-        types.contains(FilterType.stickers)) {
-      return 'Print & Sticker';
-    } else if (types.contains(FilterType.prints)) {
-      return 'Print';
-    } else if (types.contains(FilterType.stickers)) {
-      return 'Sticker';
-    }
-    return 'Print'; // Default
-  }
-
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
@@ -113,6 +99,9 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
           }
 
           final currentImageItem = state.imageItem;
+          final selectedVariation =
+              context.read<ImageVariationCubit>().selectedVariation ??
+              currentImageItem;
 
           return Material(
             color: Colors.transparent,
@@ -147,7 +136,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                               children: [
                                 // Imagem com FlyingCover (zoom e swipe para fechar)
                                 FlyingCover(
-                                  imgUrl: currentImageItem.url,
+                                  imgUrl: selectedVariation.url,
                                   onTap: widget.onClose,
                                   width: 250,
                                   height: 300,
@@ -195,7 +184,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                               .start,
                                                       children: [
                                                         Text(
-                                                          currentImageItem
+                                                          selectedVariation
                                                               .title,
                                                           style: TextStyle(
                                                             color:
@@ -210,9 +199,10 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                           height: 4,
                                                         ),
                                                         Text(
-                                                          _getImageTypeText(
-                                                            currentImageItem,
-                                                          ),
+                                                          selectedVariation
+                                                              .getImageTypeText(
+                                                                selectedVariation,
+                                                              ),
                                                           style: TextStyle(
                                                             color:
                                                                 AppColors
@@ -247,8 +237,8 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                                     BagCubit
                                                                   >()
                                                                   .addItem(
-                                                                    currentImageItem,
-                                                                    currentImageItem
+                                                                    selectedVariation,
+                                                                    selectedVariation
                                                                         .url,
                                                                   );
                                                             },
@@ -281,7 +271,7 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                 ),
                                                 const SizedBox(height: 10),
                                                 Text(
-                                                  currentImageItem.description,
+                                                  selectedVariation.description,
                                                   style: TextStyle(
                                                     color: AppColors.greyText,
                                                     fontSize: 14,

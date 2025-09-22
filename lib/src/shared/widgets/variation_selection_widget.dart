@@ -15,9 +15,9 @@ class VariationSelectionWidget extends StatelessWidget {
             return const SizedBox.shrink();
           }
 
-          final imageItem = state.imageItem;
+          final currentImageItem = state.imageItem;
 
-          if (!imageItem.hasVariations) {
+          if (currentImageItem.variations.isEmpty) {
             return const SizedBox.shrink();
           }
 
@@ -37,16 +37,16 @@ class VariationSelectionWidget extends StatelessWidget {
                 height: 60,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: imageItem.variations.length,
+                  itemCount: currentImageItem.variations.length,
                   itemBuilder: (context, index) {
-                    final variation = imageItem.variations[index];
-                    final isSelected = variation == imageItem.url;
+                    final variation = currentImageItem.variations[index];
+                    final isSelected = state.selectedVariationIndex == index;
 
                     return GestureDetector(
                       onTap:
                           () => context
                               .read<ImageVariationCubit>()
-                              .changeVariation(variation),
+                              .selectVariation(index),
                       child: Container(
                         width: 60,
                         height: 60,
@@ -76,7 +76,7 @@ class VariationSelectionWidget extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(7),
                           child: Image.asset(
-                            variation,
+                            variation.url,
                             fit: BoxFit.cover,
                             errorBuilder:
                                 (context, error, stackTrace) => Container(
