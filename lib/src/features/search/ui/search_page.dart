@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +10,7 @@ import '../../../shared/widgets/circle_button.dart';
 import '../../art/ui/art_detail_page.dart';
 import '../../bag/logic/bag_cubit.dart';
 import '../../home/ui/widgets/staggered_grid_view_widget.dart';
+import 'widgets/horizontal_products_list.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -98,85 +100,20 @@ class _SearchPageState extends State<SearchPage> {
     ),
     body: Column(
       children: [
-        // Seção "Mais procurados" (só aparece quando não está pesquisando)
         if (!_isSearching) ...[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Mais procurados',
-                style: TextStyle(
-                  color: AppColors.ruaWhite,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+          //TODO: Nao mostrar caso não tenha favoritos
+          HorizontalProductsList(
+            products: _allImages,
+            onProductTap: _openArtDetail,
+            title: 'Seus favoritos',
+            maxItems: 10,
           ),
-          SizedBox(
-            height: 120,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: _allImages.take(5).length,
-              itemBuilder: (context, index) {
-                final image = _allImages[index];
-                return Container(
-                  width: 80,
-                  margin: const EdgeInsets.only(right: 12),
-                  child: GestureDetector(
-                    onTap: () => _openArtDetail(image),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.3),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.asset(
-                              image.url,
-                              fit: BoxFit.cover,
-                              errorBuilder:
-                                  (context, error, stackTrace) => Container(
-                                    color: Colors.grey[800],
-                                    child: const Icon(
-                                      Icons.error,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          image.title,
-                          style: TextStyle(
-                            color: AppColors.ruaWhite,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+
+          HorizontalProductsList(
+            products: _allImages,
+            onProductTap: _openArtDetail,
+            title: 'Mais procurados',
+            maxItems: 5,
           ),
           const SizedBox(height: 20),
         ],
