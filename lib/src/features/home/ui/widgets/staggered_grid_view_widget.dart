@@ -201,7 +201,9 @@ class _StaggeredGridViewWidgetState extends State<StaggeredGridViewWidget> {
       itemCount: staggeredImagePool.length,
       itemBuilder: (context, index) {
         final imageData = staggeredImagePool[index];
-        final aspectRatio = imageData['width'] / imageData['height'];
+        final width = (imageData['width'] as num?)?.toDouble() ?? 1.0;
+        final height = (imageData['height'] as num?)?.toDouble() ?? 1.0;
+        final aspectRatio = width / height;
 
         return GestureDetector(
           onTap: () => _openImagePopup(ImageItem.fromMap(imageData)),

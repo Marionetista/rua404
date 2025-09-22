@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/art/ui/art_detail_page.dart';
+import '../../features/bag/logic/bag_cubit.dart';
 import '../colors/app_colors.dart';
 import '../cubits/image_variation/image_variation.dart';
 import '../enums/filter_type.dart';
@@ -233,11 +234,25 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                         const SizedBox(
                                                           width: 10,
                                                         ),
-                                                        const CircleButton(
-                                                          icon:
-                                                              CircleButtonIcon
-                                                                  .addBag,
-                                                        ),
+                                                        if (currentImageItem
+                                                            .marketable)
+                                                          CircleButton(
+                                                            icon:
+                                                                CircleButtonIcon
+                                                                    .addBag,
+                                                            onTap: () {
+                                                              // Adiciona o produto à sacola com a variação atual
+                                                              context
+                                                                  .read<
+                                                                    BagCubit
+                                                                  >()
+                                                                  .addItem(
+                                                                    currentImageItem,
+                                                                    currentImageItem
+                                                                        .url,
+                                                                  );
+                                                            },
+                                                          ),
                                                       ],
                                                     ),
                                                   ],

@@ -81,7 +81,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                             ) {
                               const begin = Offset(0.0, 1.0);
                               const end = Offset.zero;
-                              final tween = Tween(
+                              final tween = Tween<Offset>(
                                 begin: begin,
                                 end: end,
                               ).chain(CurveTween(curve: Curves.easeOut));

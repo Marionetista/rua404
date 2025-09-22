@@ -39,6 +39,7 @@ class BagEmptyWidget extends StatelessWidget {
             InkWell(
               onTap: () {
                 HapticFeedback.mediumImpact();
+                Navigator.of(context).pop();
               },
               borderRadius: BorderRadius.circular(48),
               highlightColor: AppColors.ruaWhite,

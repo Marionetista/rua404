@@ -7,6 +7,7 @@ import '../../../shared/cubits/image_variation/image_variation_cubit.dart';
 import '../../../shared/models/image_item_model.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../art/ui/art_detail_page.dart';
+import '../../bag/logic/bag_cubit.dart';
 import '../../home/ui/widgets/staggered_grid_view_widget.dart';
 
 class SearchPage extends StatefulWidget {
@@ -363,9 +364,15 @@ class _SearchPageState extends State<SearchPage> {
   void _openArtDetail(ImageItem imageItem) => Navigator.of(context).push(
     PageRouteBuilder(
       pageBuilder:
-          (context, animation, secondaryAnimation) => BlocProvider(
-            create:
-                (context) => ImageVariationCubit()..loadImageItem(imageItem),
+          (context, animation, secondaryAnimation) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create:
+                    (context) =>
+                        ImageVariationCubit()..loadImageItem(imageItem),
+              ),
+              BlocProvider.value(value: context.read<BagCubit>()),
+            ],
             child: ArtDetailPage(imageItem: imageItem),
           ),
       transitionsBuilder:
@@ -379,6 +386,7 @@ class _SearchPageState extends State<SearchPage> {
             child: child,
           ),
       transitionDuration: const Duration(milliseconds: 300),
+      opaque: false,
     ),
   );
 

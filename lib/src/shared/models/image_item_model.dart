@@ -6,8 +6,8 @@ class ImageItem extends Equatable {
   // Factory constructor para criar a partir de Map (compatibilidade com código existente)
   factory ImageItem.fromMap(Map<String, dynamic> map) => ImageItem(
     url: map['url'] as String,
-    width: (map['width'] as num).toDouble(),
-    height: (map['height'] as num).toDouble(),
+    width: (map['width'] as num?)?.toDouble() ?? 0.0,
+    height: (map['height'] as num?)?.toDouble() ?? 0.0,
     types: List<FilterType>.from(map['types'] as List),
     title: map['title'] as String,
     description: map['description'] as String? ?? 'Descrição não disponível',
@@ -22,7 +22,7 @@ class ImageItem extends Equatable {
     weight: map['weight'] as String? ?? '',
     materialType: map['materialType'] as String? ?? '',
     printing: map['printing'] as String? ?? '',
-    price: (map['price'] as num).toDouble(),
+    price: (map['price'] as num?)?.toDouble() ?? 0.0,
   );
 
   const ImageItem({

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/colors/app_colors.dart';
 import '../../../../shared/enums/filter_type.dart';
 import '../../../../shared/widgets/circle_button.dart';
+import '../../../bag/logic/bag_cubit.dart';
+import '../../../bag/logic/bag_state.dart';
 import '../../../bag/ui/pages/bag_page.dart';
 import '../../../calendar/ui/pages/calendar_page.dart';
 import '../widgets/rua_bottom_bar.dart';
@@ -47,21 +50,27 @@ class _HomePageState extends State<HomePage> {
               ),
         ),
         const SizedBox(width: 10),
-        CircleButton(
-          icon: CircleButtonIcon.bag,
-          onTap:
-              () => Navigator.of(context).push(
-                PageRouteBuilder(
-                  opaque: false,
-                  transitionDuration: const Duration(milliseconds: 200),
-                  pageBuilder:
-                      (context, animation, secondaryAnimation) =>
-                          const BagPage(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) =>
-                          FadeTransition(opacity: animation, child: child),
-                ),
-              ),
+        BlocBuilder<BagCubit, BagState>(
+          builder: (context, state) {
+            final itemsCount = state is BagLoaded ? state.totalItems : 0;
+            return CircleButton(
+              icon: CircleButtonIcon.bag,
+              itemsCount: itemsCount,
+              onTap:
+                  () => Navigator.of(context).push(
+                    PageRouteBuilder(
+                      opaque: false,
+                      transitionDuration: const Duration(milliseconds: 200),
+                      pageBuilder:
+                          (context, animation, secondaryAnimation) =>
+                              const BagPage(),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) =>
+                              FadeTransition(opacity: animation, child: child),
+                    ),
+                  ),
+            );
+          },
         ),
         const SizedBox(width: 20),
       ],

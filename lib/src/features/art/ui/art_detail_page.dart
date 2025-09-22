@@ -10,6 +10,9 @@ import '../../../shared/cubits/image_variation/image_variation_state.dart';
 import '../../../shared/models/image_item_model.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../shared/widgets/variation_selection_widget.dart';
+import '../../../utils/app_utils.dart';
+import '../../bag/logic/bag_cubit.dart';
+import '../../bag/logic/bag_state.dart';
 
 class ArtDetailPage extends StatelessWidget {
   const ArtDetailPage({required this.imageItem, super.key});
@@ -274,63 +277,74 @@ class ArtDetailPage extends StatelessWidget {
                       top: BorderSide(color: AppColors.halfWhite, width: 1),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 1.0,
+                  child: BlocBuilder<BagCubit, BagState>(
+                    builder: (context, bagState) {
+                      final subtotal =
+                          bagState is BagLoaded ? bagState.subtotal : 0.0;
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Subtotal',
-                            style: TextStyle(
-                              color: AppColors.greyText,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'R\$ 250,00',
-                            style: TextStyle(
-                              color: AppColors.ruaWhite,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              HapticFeedback.mediumImpact();
-                            },
-                            borderRadius: BorderRadius.circular(48),
-                            highlightColor: AppColors.ruaWhite,
-                            child: Container(
-                              height: 48,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                              ),
-                              decoration: BoxDecoration(
-                                color: AppColors.ruaWhite,
-                                borderRadius: BorderRadius.circular(48),
-                              ),
-                              alignment: Alignment.center,
-                              child: const Text(
-                                'Adicionar ao carrinho',
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 1.0,
+                            children: [
+                              Text(
+                                'Subtotal',
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                                  color: AppColors.greyText,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
                                 ),
                               ),
-                            ),
+                              Text(
+                                AppUtils.formatCurrency(subtotal),
+                                style: TextStyle(
+                                  color: AppColors.ruaWhite,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            spacing: 10,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  HapticFeedback.mediumImpact();
+                                  // Adiciona o produto à sacola com a variação atual
+                                  context.read<BagCubit>().addItem(
+                                    currentImageItem,
+                                    currentImageItem.url,
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(48),
+                                highlightColor: AppColors.ruaWhite,
+                                child: Container(
+                                  height: 48,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.ruaWhite,
+                                    borderRadius: BorderRadius.circular(48),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Adicionar ao carrinho',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
-                      ),
-                    ],
+                      );
+                    },
                   ),
                 ),
               ),
