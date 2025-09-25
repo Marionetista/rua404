@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../shared/colors/app_colors.dart';
-import '../../../../utils/app_utils.dart';
+import '../../../../shared/utils/app_utils.dart';
 
 class EmptyCalendarWidget extends StatelessWidget {
   const EmptyCalendarWidget({super.key});

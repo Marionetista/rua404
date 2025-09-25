@@ -8,9 +8,10 @@ import '../../../shared/colors/app_colors.dart';
 import '../../../shared/cubits/image_variation/image_variation_cubit.dart';
 import '../../../shared/cubits/image_variation/image_variation_state.dart';
 import '../../../shared/models/image_item_model.dart';
+import '../../../shared/utils/app_utils.dart';
 import '../../../shared/widgets/circle_button.dart';
 import '../../../shared/widgets/variation_selection_widget.dart';
-import '../../../utils/app_utils.dart';
+import '../../ar/ui/ar_page.dart';
 import '../../bag/logic/bag_cubit.dart';
 import '../../bag/logic/bag_state.dart';
 
@@ -161,7 +162,15 @@ class ArtDetailPage extends StatelessWidget {
                               child: CircleFavoriteButton(isFavorited: true),
                             ),
                             if (currentImageItem.hasARFilter)
-                              const CircleButton(icon: CircleButtonIcon.aircon),
+                              CircleButton(
+                                icon: CircleButtonIcon.aircon,
+                                onTap:
+                                    () => Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (_) => const ARPage(),
+                                      ),
+                                    ),
+                              ),
                           ],
                         ),
                       ],

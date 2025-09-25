@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/colors/app_colors.dart';
 import '../../../../shared/cubits/image_variation/image_variation_cubit.dart';
-import '../../../../utils/app_utils.dart';
+import '../../../../shared/utils/app_utils.dart';
 import '../../../art/ui/art_detail_page.dart';
 import '../../logic/bag_cubit.dart';
 import '../../logic/bag_item.dart';
