@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../shared/colors/app_colors.dart';
+import '../../../../shared/utils/app_utils.dart';
 import '../../../../shared/widgets/blured_button.dart';
 import '../../../../shared/widgets/circle_button.dart';
-import '../../../../utils/app_utils.dart';
 import '../../logic/bag_cubit.dart';
 import '../../logic/bag_state.dart';
 import '../widgets/bag_card_widget.dart';

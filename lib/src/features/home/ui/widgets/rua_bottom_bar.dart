@@ -4,6 +4,7 @@ import '../../../../shared/colors/app_colors.dart';
 import '../../../../shared/enums/filter_type.dart';
 import '../../../../shared/widgets/blured_button.dart';
 import '../../../../shared/widgets/circle_button.dart';
+import '../../../ar/ui/ar_page.dart';
 import '../../../search/ui/search_page.dart';
 import '../../../settings/ui/pages/settings_page.dart';
 import 'bullet_button_widget.dart';
@@ -99,7 +100,13 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
               Row(
                 spacing: 10,
                 children: [
-                  const CircleButton(icon: CircleButtonIcon.aircon),
+                  CircleButton(
+                    icon: CircleButtonIcon.aircon,
+                    onTap:
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const ARPage()),
+                        ),
+                  ),
 
                   CircleButton(
                     icon: CircleButtonIcon.profile,

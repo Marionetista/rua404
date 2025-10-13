@@ -1,7 +1,9 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../features/ar/ui/ar_page.dart';
 import '../../features/art/ui/art_detail_page.dart';
 import '../../features/bag/logic/bag_cubit.dart';
 import '../colors/app_colors.dart';
@@ -216,10 +218,20 @@ class _ImagePopupState extends State<ImagePopup> with TickerProviderStateMixin {
                                                       children: [
                                                         if (currentImageItem
                                                             .hasARFilter)
-                                                          const CircleButton(
+                                                          CircleButton(
                                                             icon:
                                                                 CircleButtonIcon
                                                                     .aircon,
+                                                            onTap:
+                                                                () => Navigator.of(
+                                                                  context,
+                                                                ).push(
+                                                                  MaterialPageRoute(
+                                                                    builder:
+                                                                        (_) =>
+                                                                            const ARPage(),
+                                                                  ),
+                                                                ),
                                                           ),
                                                         const SizedBox(
                                                           width: 10,

@@ -1,0 +1,11 @@
+{
+    "targets": [
+      {
+        "id": "orelhudo",
+        "image_path": "ar_targets/orelhudo.png",
+        "video_path": "ar_videos/orelhudo_1.mov",
+        "width": 9.0,
+        "height": 9.0
+      }
+    ]
+  }
