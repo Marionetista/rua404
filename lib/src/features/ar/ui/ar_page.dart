@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../shared/widgets/circle_button.dart';
 import '../services/ar_config_service.dart';
+import '../widgets/badges_section.dart';
+import '../widgets/onboarding_carousel.dart';
 
 class ARPage extends StatefulWidget {
   const ARPage({super.key});
@@ -16,11 +19,12 @@ class _ARPageState extends State<ARPage> {
   bool _isLoading = true;
   bool _isARActive = false;
   String? _errorMessage;
+  // bool _showOnboardingAndBadges = false;
 
   @override
   void initState() {
     super.initState();
-    _setupMethodChannel();
+    // _setupMethodChannel();
     _initializeAR();
   }
 
@@ -30,21 +34,21 @@ class _ARPageState extends State<ARPage> {
     super.dispose();
   }
 
-  void _setupMethodChannel() {
-    _channel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onTargetDetected':
-          _onTargetDetected(call.arguments['targetId']);
-          break;
-        case 'onTargetLost':
-          _onTargetLost();
-          break;
-        case 'onError':
-          _onError(call.arguments['error']);
-          break;
-      }
-    });
-  }
+  // void _setupMethodChannel() {
+  //   _channel.setMethodCallHandler((call) async {
+  //     switch (call.method) {
+  //       case 'onTargetDetected':
+  //         _onTargetDetected(call.arguments['targetId']);
+  //         break;
+  //       case 'onTargetLost':
+  //         _onTargetLost();
+  //         break;
+  //       case 'onError':
+  //         _onError(call.arguments['error']);
+  //         break;
+  //     }
+  //   });
+  // }
 
   Future<void> _initializeAR() async {
     try {
@@ -94,49 +98,61 @@ class _ARPageState extends State<ARPage> {
     }
   }
 
-  void _onTargetDetected(String targetId) {
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Target detectado: $targetId'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
-  }
+  // void _onTargetDetected(String targetId) {
+  //   if (mounted) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('Target detectado: $targetId'),
+  //         backgroundColor: Colors.green,
+  //       ),
+  //     );
+  //   }
+  // }
 
-  void _onTargetLost() {
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Target perdido'),
-          backgroundColor: Colors.orange,
-        ),
-      );
-    }
-  }
+  // void _onTargetLost() {
+  //   if (mounted) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Target perdido'),
+  //         backgroundColor: Colors.orange,
+  //       ),
+  //     );
+  //   }
+  // }
 
-  void _onError(String error) {
-    if (mounted) {
-      setState(() {
-        _errorMessage = error;
-        _isLoading = false;
-      });
-    }
-  }
+  // void _onError(String error) {
+  //   if (mounted) {
+  //     setState(() {
+  //       _errorMessage = error;
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Colors.black,
     appBar: AppBar(
+      automaticallyImplyLeading: false,
+      centerTitle: true,
       backgroundColor: Colors.transparent,
-      title: const Text('AR', style: TextStyle(color: Colors.white)),
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
+      title: const Text('Filtros AR', style: TextStyle(color: Colors.white)),
+      actions: [
+        CircleButton(
+          icon: CircleButtonIcon.exit,
+          onTap: () => Navigator.of(context).pop(),
+        ),
+        const SizedBox(width: 10),
+      ],
     ),
     body: _buildBody(),
+    floatingActionButton: CircleButton(
+      icon: CircleButtonIcon.aircon,
+      onTap: () {
+        // _setupMethodChannel();
+        _initializeAR();
+      },
+    ),
   );
 
   Widget _buildBody() {
@@ -184,27 +200,51 @@ class _ARPageState extends State<ARPage> {
       );
     }
 
-    if (_isARActive) {
-      return const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.view_in_ar, color: Colors.green, size: 48),
-            SizedBox(height: 16),
-            Text(
-              'AR ativo! Aponte a câmera para a imagem target.',
-              style: TextStyle(color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 8),
-            Text('Target: orelhudo', style: TextStyle(color: Colors.grey)),
-          ],
-        ),
-      );
-    }
-
-    return const Center(
-      child: Text('AR não está ativo', style: TextStyle(color: Colors.white)),
-    );
+    return _buildOnboardingAndBadgesView();
   }
+
+  Widget _buildOnboardingAndBadgesView() => SingleChildScrollView(
+    padding: const EdgeInsets.all(24.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Error message (if any)
+        if (_errorMessage != null) ...[
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.warning_amber_outlined,
+                    size: 64,
+                    color: Colors.red,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    _errorMessage!,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 32),
+        ],
+
+        // Carrossel de onboarding
+        const OnboardingCarousel(),
+
+        const SizedBox(height: 32),
+
+        // Seção de badges
+        const BadgesSection(),
+      ],
+    ),
+  );
 }
